@@ -1,5 +1,5 @@
 import fs from 'fs';
-import glob from 'glob';
+import { glob } from 'glob';
 import path from 'path';
 import { Observable, Observer } from 'rxjs';
 
@@ -41,25 +41,23 @@ export function filePaths$(
   pattern: string,
   ignore: string | string[]
 ): Observable<string[]> {
-  return Observable.create((observer: Observer<string[]>) => {
-    glob(
-      pattern,
-      {
+  return Observable.create(async (observer: Observer<string[]>) => {
+    try {
+      const matches = await glob(pattern, {
         cwd: startingSourcePath,
         ignore,
         nodir: true
-      },
-      (error, matches) => {
-        if (error) {
-          observer.error(error);
-        } else {
-          const fullPaths = matches.map((filePath) =>
-            getFullPath(startingSourcePath, filePath)
-          );
-          observer.next(fullPaths);
-          observer.complete();
-        }
-      }
-    );
+      });
+
+      const fullPaths = matches.map((filePath) =>
+        getFullPath(startingSourcePath, filePath)
+      );
+
+      observer.next(fullPaths);
+
+      observer.complete();
+    } catch (error) {
+      observer.error(error);
+    }
   });
 }

@@ -51,7 +51,7 @@
     "watch": "tsc --project tsconfig.build.json --watch"
   },
   "dependencies": {
-    "glob": "~7.1.2",
+    "glob": "~10.2.5",
     "lodash": "4.17.21",
     "rxjs": "6.3.3",
     "typescript": "~5.0.4"
@@ -63,7 +63,6 @@
     "@faker-js/faker": "~8.0.1",
     "@jest/globals": "~29.5.0",
     "@release-it/conventional-changelog": "~5.1.1",
-    "@types/glob": "~5.0.30",
     "@types/jest": "~29.5.1",
     "@types/lodash": "4.14.194",
     "@types/node": "~20.2.0",
