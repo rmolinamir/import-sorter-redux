@@ -83,18 +83,20 @@ export class InMemoryImportSorter implements ImportSorter {
       this.sortConfig.importMembers.order
     )!;
 
-    return importsExpr.map((x) => {
-      if (x.namedBindings && x.namedBindings.length) {
-        x.namedBindings = chain(x.namedBindings)
-          .orderBy(
-            (y: { name: string; aliasName: string }) => sortOrder(y.name),
-            [this.sortConfig.importMembers.direction]
-          )
-          .value() as ImportElement['namedBindings'];
+    return chain(
+      importsExpr.value().map((x) => {
+        if (x.namedBindings && x.namedBindings.length) {
+          x.namedBindings = chain(x.namedBindings)
+            .orderBy(
+              (y) => sortOrder(y.name),
+              [this.sortConfig.importMembers.direction]
+            )
+            .value() as ImportElement['namedBindings'];
+          return x;
+        }
         return x;
-      }
-      return x;
-    });
+      })
+    );
   }
 
   private sortModuleSpecifiers(elementGroups: ImportElementGroup[]): void {
@@ -107,7 +109,7 @@ export class InMemoryImportSorter implements ImportSorter {
       .filter((gr) => !gr.customOrderRule?.disableSort)
       .forEach((gr) => {
         gr.elements = chain(gr.elements)
-          .orderBy<ImportElement>(
+          .orderBy(
             (y) => sortOrder(y.moduleSpecifierName),
             [this.sortConfig.importPaths.direction]
           )
@@ -222,35 +224,32 @@ export class InMemoryImportSorter implements ImportSorter {
 
     const result: { [key: number]: ImportElementGroup } = {};
 
-    sortedImports
-      .forEach((x) => {
-        const rule = rules.find((e) =>
-          !e.type || e.type === 'path'
-            ? x.moduleSpecifierName.match(e.regex!) !== null
-            : this.matchNameBindings(x, e.regex!)
+    sortedImports.value().forEach((x) => {
+      const rule = rules.find((e) =>
+        !e.type || e.type === 'path'
+          ? x.moduleSpecifierName.match(e.regex!) !== null
+          : this.matchNameBindings(x, e.regex!)
+      );
+      if (!rule) {
+        this.addElement(
+          result,
+          {
+            disableSort:
+              this.sortConfig.customOrderingRules?.disableDefaultOrderSort,
+            numberOfEmptyLinesAfterGroup: this.getDefaultLineNumber(),
+            orderLevel: this.sortConfig.customOrderingRules?.defaultOrderLevel,
+            regex: null
+          },
+          x
         );
-        if (!rule) {
-          this.addElement(
-            result,
-            {
-              disableSort:
-                this.sortConfig.customOrderingRules?.disableDefaultOrderSort,
-              numberOfEmptyLinesAfterGroup: this.getDefaultLineNumber(),
-              orderLevel:
-                this.sortConfig.customOrderingRules?.defaultOrderLevel,
-              regex: null
-            },
-            x
-          );
-          return;
-        }
-        this.addElement(result, rule, x);
-      })
-      .value();
+        return;
+      }
+      this.addElement(result, rule, x);
+    });
 
     const customSortedImports = chain(Object.keys(result))
-      .orderBy((x) => +x)
-      .map<unknown, ImportElementGroup>((x) => result[x as number])
+      .orderBy((x) => Number(x))
+      .map((x) => result[Number(x)])
       .value();
 
     return customSortedImports;

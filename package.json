@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "glob": "~7.1.2",
-    "lodash": "4.17.4",
+    "lodash": "4.17.21",
     "rxjs": "6.3.3",
     "typescript": "~5.0.4"
   },
@@ -65,7 +65,7 @@
     "@release-it/conventional-changelog": "~5.1.1",
     "@types/glob": "~5.0.30",
     "@types/jest": "~29.5.1",
-    "@types/lodash": "4.14.117",
+    "@types/lodash": "4.14.194",
     "@types/node": "~20.2.0",
     "commitizen": "~4.3.0",
     "cz-conventional-changelog": "~3.3.0",
