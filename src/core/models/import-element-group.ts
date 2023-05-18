@@ -3,6 +3,6 @@ import { ImportElement } from './import-element';
 
 export interface ImportElementGroup {
   elements: ImportElement[];
-  numberOfEmptyLinesAfterGroup: number | null | undefined;
-  customOrderRule: CustomOrderRule | null;
+  numberOfEmptyLinesAfterGroup?: number | null;
+  customOrderRule?: CustomOrderRule | null;
 }

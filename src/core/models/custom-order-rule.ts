@@ -1,9 +1,9 @@
 export type CustomOrderRuleType = 'path' | 'importMember';
 
 export interface CustomOrderRule {
-  type?: CustomOrderRuleType;
+  type?: CustomOrderRuleType | null;
   numberOfEmptyLinesAfterGroup?: number | null;
-  disableSort?: boolean;
-  regex: string | null;
+  disableSort?: boolean | null;
+  regex?: string | null;
   orderLevel?: number | null;
 }

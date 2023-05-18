@@ -5,13 +5,13 @@ export interface ImportElement {
   startPosition: { line: number; character: number };
   endPosition: { line: number; character: number };
   hasFromKeyWord: boolean;
-  defaultImportName?: string;
-  namedBindings?: {
-    aliasName: string | null;
-    name: string;
-  }[];
   importComment: {
     leadingComments: Comment[];
     trailingComments: Comment[];
   };
+  defaultImportName?: string | null;
+  namedBindings?: {
+    aliasName?: string | null;
+    name: string;
+  }[];
 }
