@@ -126,17 +126,17 @@
         "importSorter.generalConfiguration.configurationFilePath": {
           "type": "string",
           "default": "./import-sorter.json",
-          "description": "Default file configuration name"
+          "description": "The name of the default configuration file."
         },
         "importSorter.generalConfiguration.sortImportsInDirectory": {
           "type": "boolean",
           "default": true,
-          "description": "Enables menu option for sorting in directory"
+          "description": "Enables the menu option for sorting imports in a directory."
         },
         "importSorter.generalConfiguration.sortOnBeforeSave": {
           "type": "boolean",
           "default": false,
-          "description": "Enables sort before each save of the document"
+          "description": "Enables sorting before each document save."
         },
         "importSorter.generalConfiguration.exclude": {
           "type": "array",
@@ -144,7 +144,7 @@
           "items": {
             "type": "string"
           },
-          "description": "Excludes sorting for files which match given regex expression. Regex considers the whole file path. The file path separator is normalized to /"
+          "description": "Excludes files from sorting based on a regular expression that matches the entire file path. The file path separator is normalized to '/'."
         },
         "importSorter.sortConfiguration.importMembers.order": {
           "enum": [
@@ -154,7 +154,7 @@
             "unsorted"
           ],
           "default": "caseInsensitive",
-          "description": "Sort Order of names in curly brackets"
+          "description": "Sort order of names within curly brackets."
         },
         "importSorter.sortConfiguration.importMembers.direction": {
           "enum": [
@@ -162,7 +162,7 @@
             "desc"
           ],
           "default": "asc",
-          "description": "Sort Direction of names in curly brackets"
+          "description": "Sort direction of names within curly brackets."
         },
         "importSorter.sortConfiguration.importPaths.order": {
           "enum": [
@@ -172,7 +172,7 @@
             "unsorted"
           ],
           "default": "caseInsensitive",
-          "description": "Sort Order of paths"
+          "description": "Sort order of import paths."
         },
         "importSorter.sortConfiguration.importPaths.direction": {
           "enum": [
@@ -180,37 +180,37 @@
             "desc"
           ],
           "default": "asc",
-          "description": "Sort Direction of paths"
+          "description": "Sort direction of import paths."
         },
         "importSorter.sortConfiguration.joinImportPaths": {
           "type": "boolean",
           "default": true,
-          "description": "Combine imports with the same path"
+          "description": "Combine imports with the same path."
         },
         "importSorter.sortConfiguration.removeUnusedImports": {
           "type": "boolean",
           "default": false,
-          "description": "Removes not used imports where we do not have explicit side effects"
+          "description": "Removes unused imports that do not have explicit side effects."
         },
         "importSorter.sortConfiguration.removeUnusedDefaultImports": {
           "type": "boolean",
           "default": false,
-          "description": "Works only if removeUnusedImports enabled. This option will remove default imports if they are not explicitly used in the source code."
+          "description": "Works only if 'removeUnusedImports' is enabled. Removes default imports if they are not explicitly used in the source code."
         },
         "importSorter.sortConfiguration.customOrderingRules.defaultOrderLevel": {
           "type": "number",
           "default": 20,
-          "description": "The default order level of everything which is not included into rules"
+          "description": "The default order level for imports not included in the custom ordering rules."
         },
         "importSorter.sortConfiguration.customOrderingRules.defaultNumberOfEmptyLinesAfterGroup": {
           "type": "number",
           "default": 1,
-          "description": "The default number of empty lines after any group. This has lesser priority then empty lines in rules"
+          "description": "The default number of empty lines after any import group. This has lower priority than empty lines defined in rules."
         },
         "importSorter.sortConfiguration.customOrderingRules.disableDefaultOrderSort": {
           "type": "boolean",
           "default": false,
-          "description": "Disable sorting of path on the default group"
+          "description": "Disables sorting of imports within the default group."
         },
         "importSorter.sortConfiguration.customOrderingRules.rules": {
           "type": "array",
@@ -234,12 +234,12 @@
               "orderLevel": 30
             }
           ],
-          "description": "The default order level of everything which is not included into rules"
+          "description": "Custom ordering rules for import groups."
         },
         "importSorter.importStringConfiguration.tabSize": {
           "type": "number",
           "default": 4,
-          "description": "Left number of spaces for the new lined imports. If tabType is set to 'tab', then the configuration defines the size of the tab in number of spaces"
+          "description": "The number of spaces for indentation when breaking imports into multiple lines. If 'tabType' is set to 'tab', the value defines the size of a tab in number of spaces."
         },
         "importSorter.importStringConfiguration.tabType": {
           "enum": [
@@ -247,12 +247,12 @@
             "tab"
           ],
           "default": "space",
-          "description": "Defines the character which will be printed on each new lined import expression"
+          "description": "Defines the character used for indentation on each new line of an import expression."
         },
         "importSorter.importStringConfiguration.numberOfEmptyLinesAfterAllImports": {
           "type": "number",
           "default": 1,
-          "description": "The number of new lines after the last sorted import"
+          "description": "The number of empty lines after the last sorted import."
         },
         "importSorter.importStringConfiguration.quoteMark": {
           "enum": [
@@ -260,7 +260,7 @@
             "double"
           ],
           "default": "single",
-          "description": "The path quotes"
+          "description": "The type of quotes used for import paths."
         },
         "importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.type": {
           "enum": [
@@ -270,32 +270,32 @@
             "newLineEachExpressionAfterCountLimitExceptIfOnlyOne"
           ],
           "default": "maxLineLength",
-          "description": "The type of length restriction, before import is moved to a new line"
+          "description": "The type of length restriction before an import is moved to a new line."
         },
         "importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.count": {
           "type": "number",
           "default": 100,
-          "description": "The count of units before import is new-lined"
+          "description": "The maximum number of import expressions allowed on a single line."
         },
         "importSorter.importStringConfiguration.spacingPerImportExpression.afterStartingBracket": {
           "type": "number",
           "default": 1,
-          "description": "Number of spaces after {"
+          "description": "The number of spaces after the opening curly bracket '{'."
         },
         "importSorter.importStringConfiguration.spacingPerImportExpression.beforeEndingBracket": {
           "type": "number",
           "default": 1,
-          "description": "Number of spaces before }"
+          "description": "The number of spaces before the closing curly bracket '}'."
         },
         "importSorter.importStringConfiguration.spacingPerImportExpression.beforeComma": {
           "type": "number",
           "default": 0,
-          "description": "Number of spaces before comma"
+          "description": "The number of spaces before a comma between import expressions."
         },
         "importSorter.importStringConfiguration.spacingPerImportExpression.afterComma": {
           "type": "number",
           "default": 1,
-          "description": "Number of spaces after comma"
+          "description": "The number of spaces after a comma between import expressions."
         },
         "importSorter.importStringConfiguration.trailingComma": {
           "enum": [
@@ -304,12 +304,12 @@
             "multiLine"
           ],
           "default": "none",
-          "description": "If always/multiLine then adds a trailing comma at the end of the imports for 'single and multi' and 'multi-line' imports respectively. Default is none therefore no trailing comma"
+          "description": "Specifies the usage of a trailing comma at the end of import statements. 'none' means no trailing comma, 'always' means a trailing comma for both single-line and multi-line imports, 'multiLine' means a trailing comma only for multi-line imports."
         },
         "importSorter.importStringConfiguration.hasSemicolon": {
           "type": "boolean",
           "default": true,
-          "description": "If true then the import string has a semicolon at the end, otherwise it will not be appended. Default is true"
+          "description": "Specifies whether import statements should end with a semicolon."
         }
       }
     }
