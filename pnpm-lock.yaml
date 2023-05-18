@@ -29,6 +29,9 @@ importers:
       '@faker-js/faker':
         specifier: ~8.0.1
         version: 8.0.1
+      '@jest/globals':
+        specifier: ^29.5.0
+        version: 29.5.0
       '@release-it/conventional-changelog':
         specifier: ~5.1.1
         version: 5.1.1(release-it@15.10.3)
