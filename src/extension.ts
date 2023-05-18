@@ -3,24 +3,36 @@ import { commands, Disposable, ExtensionContext, Uri, workspace } from 'vscode';
 import { ImportSorterExtension } from './import-sorter-extension';
 
 export const activate = (context: ExtensionContext) => {
-    const importSorterExtension = new ImportSorterExtension();
-    importSorterExtension.initialise();
+  const importSorterExtension = new ImportSorterExtension();
+  importSorterExtension.initialize();
 
-    const sortImportsCommand: Disposable = commands.registerCommand('extension.sortImports', () => {
-        importSorterExtension.sortActiveDocumentImportsFromCommand();
-    });
+  const sortImportsCommand: Disposable = commands.registerCommand(
+    'extension.sortImports',
+    () => {
+      importSorterExtension.sortActiveDocumentImportsFromCommand();
+    }
+  );
 
-    const sortImportsInDirectoryCommand: Disposable = commands.registerCommand('extension.sortImportsInDirectory', (uri: Uri) => {
-        importSorterExtension.sortImportsInDirectories(uri);
-    });
+  const sortImportsInDirectoryCommand: Disposable = commands.registerCommand(
+    'extension.sortImportsInDirectory',
+    (uri: Uri) => {
+      importSorterExtension.sortImportsInDirectories(uri);
+    }
+  );
 
-    const onWillSaveTextDocument = workspace.onWillSaveTextDocument(event => importSorterExtension.sortModifiedDocumentImportsFromOnBeforeSaveCommand(event));
+  const onWillSaveTextDocument = workspace.onWillSaveTextDocument((event) =>
+    importSorterExtension.sortModifiedDocumentImportsFromOnBeforeSaveCommand(
+      event
+    )
+  );
 
-    context.subscriptions.push(sortImportsCommand);
-    context.subscriptions.push(sortImportsInDirectoryCommand);
-    context.subscriptions.push(importSorterExtension);
-    context.subscriptions.push(onWillSaveTextDocument);
+  context.subscriptions.push(sortImportsCommand);
+  context.subscriptions.push(sortImportsInDirectoryCommand);
+  context.subscriptions.push(importSorterExtension);
+  context.subscriptions.push(onWillSaveTextDocument);
 };
 
 // this method is called when your extension is deactivated
-export const deactivate = () => {/* */ };
+export const deactivate = () => {
+  /* */
+};

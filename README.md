@@ -132,7 +132,7 @@ an example of default configuration is provided bellow. For available options ha
   "importSorter.sortConfiguration.removeUnusedDefaultImports": false
 ```
 
-## Some settings in more details:
+## Some settings in more details
 
 - `importSorter.generalConfiguration.configurationFilePath` adds an option to read configuration from file. The setting represents a relative path to the root of the open vscode workspace.
   The default value is `./import-sorter.json`. The path search is relative to the open workspace(`usually where package.json is located`). Bellow is a example of the configuration:
@@ -155,7 +155,9 @@ import-sorter.json
   }
 }
 ```
+
 Alternatively you can set configuration as in visual studio code
+
 ```json
 import-sorter.json
 
@@ -166,7 +168,9 @@ import-sorter.json
     "sortConfiguration.customOrderingRules.defaultNumberOfEmptyLinesAfterGroup": 2
 }
 ```
+
 Or
+
 ```json
 import-sorter.json
 
@@ -246,8 +250,10 @@ As a result we get `4` sort `groups`. Those groups are `individually` sorted by 
 
 ---
 
-## Example of default setup for Prettier:
+## Example of default setup for Prettier
+
 At the time of writing this documentation, the following are the settings which needs to be set to make import sorter have the behavior aligned with the defaults of Prettier.
+
 ```json
 {
   "editor.formatOnSave": true,
@@ -258,7 +264,9 @@ At the time of writing this documentation, the following are the settings which 
   "importSorter.importStringConfiguration.quoteMark": "double"
 }
 ```
-Alternatively you can set `import-sorter.json` configuration file with the following content
+
+Alternatively you can set `import-sorter.json` configuration file with the following content.
+
 ```json
 import-sorter.json
 
@@ -270,10 +278,3 @@ import-sorter.json
     "importStringConfiguration.quoteMark": "double"
 }
 ```
-## Future roadmap
-
-- Handle external dependencies based on the most external dependencies being at the top and group based on those. Sorting will be done within those groups.
-
-## Release Notes
-
-Refer to change log
