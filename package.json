@@ -1,27 +1,24 @@
 {
   "name": "import-sorter",
-  "displayName": "TypeScript Import Sorter",
-  "description": "Extension sorts TypeScript imports according to the configuration provided. The configuration defaults follow ESLint sort-imports rule",
-  "icon": "assets/icons/import-sorter.png",
   "version": "3.3.1",
-  "publisher": "mike-co",
-  "engines": {
-    "vscode": "^1.33.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/SoominHan/import-sorter.git"
-  },
-  "license": "SEE LICENSE IN LICENSE",
-  "categories": [
-    "Formatters"
-  ],
+  "displayName": "TypeScript Import Sorter",
+  "description": "Extension sorts TypeScript imports according to the configuration provided. The configuration defaults follow ESLint sort-imports rule.",
+  "icon": "assets/icons/import-sorter.png",
   "keywords": [
     "Typescript",
     "imports",
     "sort",
     "order",
     "sort imports"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rmolinamir/import-sorter.git"
+  },
+  "license": "MIT",
+  "publisher": "rmolinamir",
+  "categories": [
+    "Formatters"
   ],
   "activationEvents": [
     "onLanguage:javascript",
@@ -31,33 +28,66 @@
     "onCommand:extension.sortImports",
     "onCommand:extension.sortImportsInDirectory"
   ],
-  "main": "./out/src/extension",
+  "main": "./dist/src/extension",
   "scripts": {
     "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
+    "build": "tsc --project tsconfig.build.json",
+    "clean:deps": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
+    "clean:dist": "find ./lib -name 'dist' -type d -prune -exec rm -rf '{}' +",
+    "clean:pnpm": "find . -name 'pnpm-lock.yaml' -type f -prune -exec rm -rf '{}' +",
+    "clean:tmp": "find ./lib -name 'tmp' -type d -prune -exec rm -rf '{}' +",
+    "clean": "pnpm clean:deps && pnpm clean:dist && pnpm clean:pnpm && pnpm clean:tmp",
+    "lint:fix": "tsc --noEmit && eslint --fix",
+    "lint:prepublish": "tsc --project tsconfig.build.json --noEmit && eslint",
+    "lint": "tsc --noEmit && eslint",
+    "prebuild": "rm -rf tsconfig.build.tsbuildinfo ./dist",
+    "prepublish": "pnpm build",
     "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "npm run compile && node ./node_modules/vscode/bin/test",
-    "clean": "rimraf -- node_modules coverage out",
-    "lint": "tslint src/**/*.ts"
+    "release:dry": "pnpm release-it --dry-run",
+    "release": "pnpm release-it",
+    "test:watch": "pnpm jest --watch",
+    "test": "pnpm jest",
+    "watch": "tsc --project tsconfig.build.json --watch"
   },
   "dependencies": {
     "glob": "^7.1.2",
-    "typescript": "^2.6.1",
     "lodash": "4.17.4",
-    "rxjs": "6.3.3"
+    "rxjs": "6.3.3",
+    "typescript": "~5.0.4"
   },
   "devDependencies": {
-    "@types/lodash": "4.14.117",
-    "@types/mocha": "^2.2.42",
-    "@types/node": "^8.10.25",
+    "@config/eslint": "workspace:*",
+    "@config/jest": "workspace:*",
+    "@config/tsconfig": "workspace:*",
+    "@faker-js/faker": "~8.0.1",
+    "@release-it/conventional-changelog": "~5.1.1",
     "@types/glob": "^5.0.30",
+    "@types/jest": "~29.5.1",
+    "@types/lodash": "4.14.117",
+    "@types/node": "~20.2.0",
+    "commitizen": "~4.3.0",
+    "cz-conventional-changelog": "~3.3.0",
+    "jest": "~29.5.0",
+    "release-it": "~15.10.3",
+    "ts-jest": "~29.1.0",
     "vscode-nls": "^2.0.2",
-    "expect.js": "^0.3.1",
-    "mocha": "^2.3.3",
-    "tslint": "^5.8.0",
-    "vscode": "^1.1.21"
+    "vscode": "^1.1.37"
   },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog",
+      "disableScopeLowerCase": false,
+      "disableSubjectLowerCase": false,
+      "maxHeaderWidth": 100,
+      "maxLineWidth": 100
+    }
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=7.0.0",
+    "vscode": ">=1.33.0"
+  },
+  "packageManager": "pnpm@8.3.1",
   "contributes": {
     "commands": [
       {

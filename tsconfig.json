@@ -1,24 +1,5 @@
 {
-    "compilerOptions": {
-        "module": "commonjs",
-        "target": "es6",
-        "outDir": "out",
-        "noUnusedParameters": true,
-        "noUnusedLocals": true,
-        "lib": [
-            "es6"
-        ],
-        "sourceMap": true,
-        "rootDir": ".",
-        "types": [
-            "node",
-            "lodash",
-            "mocha"
-        ]
-    },
-    "exclude": [
-        "node_modules",
-        "out",
-        ".vscode-test"
-    ]
+  "extends": "@config/tsconfig/backend.json",
+  "include": ["."],
+  "exclude": ["dist", "node_modules"]
 }
