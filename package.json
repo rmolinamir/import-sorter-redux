@@ -1,6 +1,6 @@
 {
   "name": "import-sorter-redux",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "displayName": "Import Sorter Redux",
   "description": "A powerful Visual Studio Code extension that automates the sorting of TypeScript imports based on a customizable configuration. Maintain code organization effortlessly!",
   "icon": "assets/import-sorter-redux-logo-128x128.png",
@@ -39,7 +39,7 @@
   "main": "./out/src/extension",
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
-    "bundle": "esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
+    "bundle": "esbuild ./src/extension.ts --bundle --outfile=out/src/extension.js --external:vscode --format=cjs --platform=node",
     "clean:deps": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
     "clean:out": "find ./lib -name 'out' -type d -prune -exec rm -rf '{}' +",
     "clean:pnpm": "find . -name 'pnpm-lock.yaml' -type f -prune -exec rm -rf '{}' +",
