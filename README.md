@@ -252,7 +252,7 @@ The `type` field is optional and defaults to `path` (another valid value is `imp
 
 ### Import String Configuration
 
-The `importSorter.importStringConfiguration.trailingComma` setting is an enum that can be set to `always`, `multiLine`, or `none`. These options control whether a trailing comma is appended to import statements. The default value is `none`.
+The `importSorter.importStringConfiguration.trailingComma` setting is an enum that can be set to `always`, `multiLine`, or `none`. These options control whether a trailing comma is appended to import declarations. The default value is `none`.
 
 The `importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.type` setting is an enum that can be set to `words`, `maxLineLength`, or `newLineEachExpressionAfterCountLimit`. It works in conjunction with the `importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.count` setting, which determines the threshold for moving imports to the next line. The available options are:
 

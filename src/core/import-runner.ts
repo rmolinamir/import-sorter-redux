@@ -97,7 +97,7 @@ export class SimpleImportRunner implements ImportRunner {
       imports.usedTypeReferences
     );
 
-    const sortedImportsText = this.importCreator.createImportText(
+    const sortedImportsText = this.importCreator.createImportDeclaration(
       sortedImportsWithExcludedImports.groups
     );
 

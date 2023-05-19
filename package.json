@@ -305,12 +305,12 @@
             "multiLine"
           ],
           "default": "none",
-          "description": "Specifies the usage of a trailing comma at the end of import statements. 'none' means no trailing comma, 'always' means a trailing comma for both single-line and multi-line imports, 'multiLine' means a trailing comma only for multi-line imports."
+          "description": "Specifies the usage of a trailing comma at the end of import declarations. 'none' means no trailing comma, 'always' means a trailing comma for both single-line and multi-line imports, 'multiLine' means a trailing comma only for multi-line imports."
         },
         "importSorter.importStringConfiguration.hasSemicolon": {
           "type": "boolean",
           "default": true,
-          "description": "Specifies whether import statements should end with a semicolon."
+          "description": "Specifies whether import declarations should end with a semicolon."
         }
       }
     }

@@ -7,7 +7,7 @@ import {
 } from '../src/core/core-public';
 
 interface ImportCreatorTest {
-  testName: string;
+  name: string;
   config: ImportStringConfiguration;
   elementGroups: ImportElementGroup[];
   expected: string;
@@ -16,10 +16,10 @@ interface ImportCreatorTest {
 const createConfiguration = (partialConfig: ImportStringConfiguration) =>
   Object.assign({}, defaultImportStringConfiguration, partialConfig);
 
-suite('Import Creator Tests', () => {
-  const testCases: ImportCreatorTest[] = [
+suite('ImportCreator', () => {
+  const tests: ImportCreatorTest[] = [
     {
-      testName: 'test0',
+      name: 'Test 1',
       config: createConfiguration({
         numberOfEmptyLinesAfterAllImports: 0,
         maximumNumberOfImportExpressionsPerLine: {
@@ -55,7 +55,7 @@ suite('Import Creator Tests', () => {
       expected: "import t, {\n    B, a as cc, ac\n} from 'createString.ts';"
     },
     {
-      testName: 'test1 - trailing comma',
+      name: 'Test 2 - Trailing Comma',
       config: createConfiguration({
         numberOfEmptyLinesAfterAllImports: 0,
         maximumNumberOfImportExpressionsPerLine: {
@@ -90,7 +90,7 @@ suite('Import Creator Tests', () => {
         "import { ChangeDetectionStrategy, DebugElement } from '@angular/core';"
     },
     {
-      testName: 'test2 - trailing comma',
+      name: 'Test 3 - Trailing Comma',
       config: createConfiguration({
         numberOfEmptyLinesAfterAllImports: 0,
         maximumNumberOfImportExpressionsPerLine: {
@@ -125,7 +125,7 @@ suite('Import Creator Tests', () => {
         "import {\n    ChangeDetectionStrategy, DebugElement\n} from '@angular/core';"
     },
     {
-      testName: 'test3 - trailing comma',
+      name: 'Test 4 - Trailing Comma',
       config: createConfiguration({
         trailingComma: 'always',
         maximumNumberOfImportExpressionsPerLine: {
@@ -160,7 +160,7 @@ suite('Import Creator Tests', () => {
         "import { ChangeDetectionStrategy, DebugElement, } from '@angular/core';\n"
     },
     {
-      testName: 'test4 - trailing comma',
+      name: 'Test 5 - Trailing Comma',
       config: createConfiguration({
         trailingComma: 'always',
         maximumNumberOfImportExpressionsPerLine: {
@@ -195,7 +195,7 @@ suite('Import Creator Tests', () => {
         "import {\n    ChangeDetectionStrategy, DebugElement,\n} from '@angular/core';\n"
     },
     {
-      testName: 'test5 - trailing comma',
+      name: 'Test 6 - Trailing Comma',
       config: createConfiguration({
         trailingComma: 'multiLine',
         maximumNumberOfImportExpressionsPerLine: {
@@ -230,7 +230,7 @@ suite('Import Creator Tests', () => {
         "import { ChangeDetectionStrategy, DebugElement } from '@angular/core';\n"
     },
     {
-      testName: 'test6 - trailing comma',
+      name: 'Test 7 - Trailing Comma',
       config: createConfiguration({
         trailingComma: 'multiLine',
         maximumNumberOfImportExpressionsPerLine: {
@@ -265,7 +265,7 @@ suite('Import Creator Tests', () => {
         "import {\n    ChangeDetectionStrategy, DebugElement,\n} from '@angular/core';\n"
     },
     {
-      testName: 'test7 - optional semi-colon',
+      name: 'Test 8 - Optional Semicolon',
       config: createConfiguration({
         hasSemicolon: false,
         maximumNumberOfImportExpressionsPerLine: {
@@ -300,7 +300,7 @@ suite('Import Creator Tests', () => {
         "import { ChangeDetectionStrategy, DebugElement } from '@angular/core'\n"
     },
     {
-      testName: 'test8 - optional semi-colon',
+      name: 'Test 9 - Optional Semicolon',
       config: createConfiguration({
         hasSemicolon: false,
         maximumNumberOfImportExpressionsPerLine: {
@@ -335,7 +335,7 @@ suite('Import Creator Tests', () => {
         "import {\n    ChangeDetectionStrategy, DebugElement\n} from '@angular/core'\n"
     },
     {
-      testName: 'test9 - import string has 4 new lines',
+      name: 'Test 10 - Multiline Import Declaration',
       config: createConfiguration({
         numberOfEmptyLinesAfterAllImports: 0,
         maximumNumberOfImportExpressionsPerLine: {
@@ -370,7 +370,7 @@ suite('Import Creator Tests', () => {
       expected: "import {\n    a, b,\n    c\n} from '@angular/core';"
     },
     {
-      testName: 'test10 - import string is type only',
+      name: 'Test 11 - Type-Only Import Declaration',
       config: createConfiguration({} as ImportStringConfiguration),
       elementGroups: [
         {
@@ -399,33 +399,13 @@ suite('Import Creator Tests', () => {
     }
   ];
 
-  const getImportText = (
-    groups: ImportElementGroup[],
-    config: ImportStringConfiguration
-  ) => {
-    const creator = new InMemoryImportCreator();
-    creator.initialize(config);
-    return creator.createImportText(groups);
-  };
+  tests.forEach(({ name, config, elementGroups, expected }) => {
+    test(`${name}: ImportCreator returns correct import declaration`, () => {
+      const creator = new InMemoryImportCreator();
+      creator.initialize(config);
+      const importDeclaration = creator.createImportDeclaration(elementGroups);
 
-  const importCreatorTest = (
-    testName: string,
-    config: ImportStringConfiguration,
-    groups: ImportElementGroup[],
-    expected: string
-  ) => {
-    test(`ImportCreator : ${testName} produces correct string`, () => {
-      const importText = getImportText(groups, config);
-      expect(importText).to.equal(expected);
+      expect(importDeclaration).to.equal(expected);
     });
-  };
-
-  testCases.forEach((testElement) => {
-    importCreatorTest(
-      testElement.testName,
-      testElement.config,
-      testElement.elementGroups,
-      testElement.expected
-    );
   });
 });
