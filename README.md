@@ -5,16 +5,16 @@ The `import-sorter-redux` extension is a powerful Visual Studio Code tool that b
 ## Examples
 
 Different types of sorting in a file:
-![alt text](./assets/import-sorter-example-1.gif "Import Sorter")
+![alt text](./assets/import-sorter-redux-example-1.gif "Import Sorter")
 
 Deep directory sorting:
-![alt text](./assets/import-sorter-example-2.gif "Import Sorter Directory")
+![alt text](./assets/import-sorter-redux-example-2.gif "Import Sorter Directory")
 
 Sorting before save (disabled by default):
-![alt text](./assets/import-sorter-example-3.gif "Sort on safe")
+![alt text](./assets/import-sorter-redux-example-3.gif "Sort on safe")
 
 Prettier integration:
-![alt text](./assets/import-sorter-example-4.gif "Prettier integration")
+![alt text](./assets/import-sorter-redux-example-4.gif "Prettier integration")
 
 ## Features
 
