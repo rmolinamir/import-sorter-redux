@@ -332,8 +332,5 @@
         }
       }
     }
-  },
-  "npm": {
-    "publish": false
   }
 }

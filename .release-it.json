@@ -16,5 +16,8 @@
   "github": {
     "release": true,
     "releaseName": "Release ${npm.name} v${version}"
+  },
+  "npm": {
+    "publish": false
   }
 }
