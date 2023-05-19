@@ -1,0 +1,20 @@
+{
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "preset": "conventionalcommits"
+    }
+  },
+  "hooks": {
+    "before:init": ["pnpm lint:prepublish", "pnpm build", "pnpm test"],
+    "after:bump": ["pnpm vsce package --no-dependencies", "pnpm vsce publish --no-dependencies"],
+    "after:release": "echo Successfully released ${npm.name} v${version} to the Visual Studio Code Marketplace."
+  },
+  "git": {
+    "commitMessage": "chore(${npm.name}): release ${npm.name} v${version}",
+    "tagName": "${npm.name}-v${version}"
+  },
+  "github": {
+    "release": true,
+    "releaseName": "Release ${npm.name} v${version}"
+  }
+}

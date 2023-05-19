@@ -3,13 +3,20 @@
   "version": "0.0.0",
   "displayName": "Import Sorter Redux",
   "description": "A powerful Visual Studio Code extension that automates the sorting of TypeScript imports based on a customizable configuration. Maintain code organization effortlessly!",
-  "icon": "assets/import-sorter-redux-logo-128-128.png",
+  "icon": "assets/import-sorter-redux-logo-128x128.png",
   "keywords": [
-    "TypeScript",
+    "typescript",
     "imports",
     "sort",
     "order",
-    "sort imports"
+    "sort imports",
+    "extension",
+    "code organization",
+    "automate",
+    "configuration",
+    "enhancement",
+    "development",
+    "tool"
   ],
   "repository": {
     "type": "git",
@@ -31,9 +38,7 @@
   ],
   "main": "./out/src/extension",
   "scripts": {
-    "vscode:prepublish": "npm run compile",
     "build": "tsc --project tsconfig.build.json",
-    "compile": "pnpm build",
     "clean:deps": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
     "clean:out": "find ./lib -name 'out' -type d -prune -exec rm -rf '{}' +",
     "clean:pnpm": "find . -name 'pnpm-lock.yaml' -type f -prune -exec rm -rf '{}' +",
@@ -43,12 +48,11 @@
     "lint:prepublish": "tsc --project tsconfig.build.json --noEmit && eslint",
     "lint": "tsc --noEmit && eslint",
     "prebuild": "rm -rf tsconfig.build.tsbuildinfo ./out",
-    "prepublish": "pnpm build",
-    "release:dry": "pnpm release-it --dry-run",
-    "release": "pnpm release-it",
-    "test": "pnpm mocha",
-    "test:watch": "pnpm mocha --watch",
     "test:vscode": "node out/test/main.js",
+    "test:watch": "pnpm mocha --watch",
+    "test": "pnpm mocha",
+    "vscode:login": "pnpm vsce login rmolinamir",
+    "vscode:publish": "pnpm release-it",
     "watch": "tsc --project tsconfig.build.json --watch"
   },
   "dependencies": {
@@ -67,12 +71,14 @@
     "@types/lodash": "4.14.194",
     "@types/mocha": "~10.0.1",
     "@types/node": "~16.11.7",
-    "@types/vscode": "~1.78.0",
+    "@types/vscode": "^1.33.0",
     "@vscode/test-electron": "~2.3.2",
+    "@vscode/vsce": "~2.19.0",
     "chai": "~4.3.7",
     "commitizen": "~4.3.0",
     "cz-conventional-changelog": "~3.3.0",
     "mocha": "~10.2.0",
+    "release-it": "~15.10.3",
     "vscode-nls": "~5.2.0",
     "vscode-test": "~1.6.1"
   },
@@ -326,5 +332,8 @@
         }
       }
     }
+  },
+  "npm": {
+    "publish": false
   }
 }

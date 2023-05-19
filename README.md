@@ -46,39 +46,6 @@ For directory sorting, you can use the feature accessible from the `resource exp
 
 **Note:** Before performing global source code sorting, ensure that the project is managed by a version control system. The sorter will sort and rewrite the source code without prompting for confirmation.
 
-## Running Tests
-
-### Test Explorer
-
-To facilitate running tests in VS Code, follow these steps:
-
-1. Install the [Test Explorer UI](https://marketplace.visualstudio.com/items?itemName=hbenl.vscode-test-explorer) extension from the Visual Studio Code Marketplace.
-2. Install the [Mocha Test Explorer](https://marketplace.visualstudio.com/items?itemName=hbenl.vscode-mocha-test-adapter) extension from the Visual Studio Code Marketplace.
-3. Once both extensions are installed, you can conveniently execute your tests using the [Testing](https://marketplace.visualstudio.com/items?itemName=hbenl.vscode-test-explorer) view in VS Code.
-
-By following these steps, you can utilize the Test Explorer UI and Mocha Test Explorer extensions to streamline the process of running tests directly within the Testing view in VS Code, simplifying test execution and enhancing your testing workflow.
-
-### `vscode-test` Framework
-
-To run tests for your VS Code extension using the `vscode-test` framework, follow these steps:
-
-1. Open the debug view by pressing `Ctrl+Shift+D` (`Cmd+Shift+D` on Mac).
-2. From the launch configuration dropdown, select `Launch Tests`.
-3. Press `F5` to execute the tests in a new window with your extension loaded.
-4. The test results will be displayed in the debug console.
-5. To modify existing tests or add new ones, navigate to the `test/extension.test.ts` file or create new test files within the `test` folder.
-   * Test files should follow the naming pattern `**.test.ts` to be recognized by the test runner.
-   * You can organize your tests into subfolders within the `test` folder according to your preferred structure.
-
-By following these steps, you can leverage the `vscode-test` framework to execute and monitor tests for your VS Code extension, making it easier to develop and maintain a robust extension with reliable test coverage.
-
-Here are some additional tips for running tests:
-
-* You can run a single test by clicking the green play button next to the test in the Test Explorer.
-* You can run a group of tests by selecting the tests in the Test Explorer and clicking the green play button.
-* You can run all tests by clicking the green play button at the top of the Test Explorer.
-* You can debug tests by setting breakpoints in your test code and then clicking the green play button in the Test Explorer.
-
 ## Extension Settings
 
 An example of the default configuration is provided below. For available options, refer to VS Code settings (you can search for `importSorter` to find the available settings).
@@ -303,3 +270,36 @@ Alternatively, you can set up a `import-sorter.json` configuration file with the
     "importStringConfiguration.quoteMark": "double"
 }
 ```
+
+## Running Tests
+
+### Test Explorer
+
+To facilitate running tests in VS Code, follow these steps:
+
+1. Install the [Test Explorer UI](https://marketplace.visualstudio.com/items?itemName=hbenl.vscode-test-explorer) extension from the Visual Studio Code Marketplace.
+2. Install the [Mocha Test Explorer](https://marketplace.visualstudio.com/items?itemName=hbenl.vscode-mocha-test-adapter) extension from the Visual Studio Code Marketplace.
+3. Once both extensions are installed, you can conveniently execute your tests using the [Testing](https://marketplace.visualstudio.com/items?itemName=hbenl.vscode-test-explorer) view in VS Code.
+
+By following these steps, you can utilize the Test Explorer UI and Mocha Test Explorer extensions to streamline the process of running tests directly within the Testing view in VS Code, simplifying test execution and enhancing your testing workflow.
+
+### `vscode-test` Framework
+
+To run tests for your VS Code extension using the `vscode-test` framework, follow these steps:
+
+1. Open the debug view by pressing `Ctrl+Shift+D` (`Cmd+Shift+D` on Mac).
+2. From the launch configuration dropdown, select `Launch Tests`.
+3. Press `F5` to execute the tests in a new window with your extension loaded.
+4. The test results will be displayed in the debug console.
+5. To modify existing tests or add new ones, navigate to the `test/extension.test.ts` file or create new test files within the `test` folder.
+   * Test files should follow the naming pattern `**.test.ts` to be recognized by the test runner.
+   * You can organize your tests into subfolders within the `test` folder according to your preferred structure.
+
+By following these steps, you can leverage the `vscode-test` framework to execute and monitor tests for your VS Code extension, making it easier to develop and maintain a robust extension with reliable test coverage.
+
+Here are some additional tips for running tests:
+
+* You can run a single test by clicking the green play button next to the test in the Test Explorer.
+* You can run a group of tests by selecting the tests in the Test Explorer and clicking the green play button.
+* You can run all tests by clicking the green play button at the top of the Test Explorer.
+* You can debug tests by setting breakpoints in your test code and then clicking the green play button in the Test Explorer.
