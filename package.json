@@ -39,6 +39,7 @@
   "main": "./out/src/extension",
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
+    "bundle": "esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
     "clean:deps": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
     "clean:out": "find ./lib -name 'out' -type d -prune -exec rm -rf '{}' +",
     "clean:pnpm": "find . -name 'pnpm-lock.yaml' -type f -prune -exec rm -rf '{}' +",
@@ -48,14 +49,17 @@
     "lint:prepublish": "tsc --project tsconfig.build.json --noEmit && eslint",
     "lint": "tsc --noEmit && eslint",
     "prebuild": "rm -rf tsconfig.build.tsbuildinfo ./out",
+    "prebundle": "rm -rf tsconfig.build.tsbuildinfo ./out",
     "test:vscode": "node out/test/main.js",
     "test:watch": "pnpm mocha --watch",
     "test": "pnpm mocha",
     "vscode:login": "pnpm vsce login rmolinamir",
+    "vscode:prepublish": "pnpm bundle --minify",
     "vscode:publish": "pnpm release-it",
     "watch": "tsc --project tsconfig.build.json --watch"
   },
   "dependencies": {
+    "esbuild": "^0.17.19",
     "glob": "~10.2.5",
     "lodash": "~4.17.21",
     "rxjs": "7.8.1",

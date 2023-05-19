@@ -8,7 +8,7 @@
     }
   },
   "hooks": {
-    "before:init": ["pnpm lint:prepublish", "pnpm build", "pnpm test"],
+    "before:init": ["pnpm lint:prepublish", "pnpm test", "pnpm bundle"],
     "after:bump": ["pnpm vsce package --no-dependencies", "pnpm vsce publish --no-dependencies"],
     "after:release": "echo Successfully released ${npm.name} v${version} to the Visual Studio Code Marketplace."
   },
