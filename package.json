@@ -54,7 +54,6 @@
     "test:watch": "pnpm mocha --watch",
     "test": "pnpm mocha",
     "vscode:login": "pnpm vsce login rmolinamir",
-    "vscode:prepublish": "pnpm bundle --minify",
     "vscode:publish": "pnpm release-it",
     "watch": "tsc --project tsconfig.build.json --watch"
   },
