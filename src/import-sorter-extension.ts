@@ -164,7 +164,7 @@ export class ImportSorterExtension {
     return this.sortActiveDocumentImports();
   }
 
-  public sortImportsInDirectories(uri: Uri): Thenable<void> {
+  public sortImportsInDirectory(uri: Uri): Thenable<void> {
     return window.withProgress(
       {
         location: ProgressLocation.Notification,

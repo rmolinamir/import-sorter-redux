@@ -17,7 +17,7 @@ export const activate = (context: ExtensionContext) => {
   const sortImportsInDirectoryCommand: Disposable = commands.registerCommand(
     'extension.sortImportsInDirectory',
     (uri: Uri) => {
-      importSorterExtension.sortImportsInDirectories(uri);
+      importSorterExtension.sortImportsInDirectory(uri);
     }
   );
 

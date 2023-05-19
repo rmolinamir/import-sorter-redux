@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "displayName": "Import Sorter Redux",
   "description": "A powerful Visual Studio Code extension that automates the sorting of TypeScript imports based on a customizable configuration. Maintain code organization effortlessly!",
-  "icon": "assets/import-sorter-redux.png",
+  "icon": "assets/import-sorter-redux-logo-128-128.png",
   "keywords": [
     "TypeScript",
     "imports",
