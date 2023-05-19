@@ -103,11 +103,11 @@ export class InMemoryImportCreator implements ImportCreator {
   }
 
   private createSingleImportString(element: ImportElement) {
+    const importStatement = this.getImportStatement(element);
     const qMark = this.getQuoteMark();
-    const typeOnly = element.isTypeOnly ? 'type ' : ''; // TODO: A function for this
 
     if (!element.hasFromKeyWord)
-      return `import ${typeOnly}${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`;
+      return `${importStatement} ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`;
 
     if (element.namedBindings && element.namedBindings.length > 0) {
       const isStarImport = element.namedBindings.some((x) => x.name === '*');
@@ -124,18 +124,18 @@ export class InMemoryImportCreator implements ImportCreator {
     }
 
     if (element.defaultImportName)
-      return `import ${typeOnly}${element.defaultImportName} from ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`;
+      return `${importStatement} ${element.defaultImportName} from ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`;
     else
-      return `import ${typeOnly}{} from ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`;
+      return `${importStatement} {} from ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`;
   }
 
   private createStarImport(element: ImportElement) {
+    const importStatement = this.getImportStatement(element);
     const qMark = this.getQuoteMark();
     const spaceConfig = this.getSpaceConfig();
-    const typeOnly = element.isTypeOnly ? 'type ' : ''; // TODO: A function for this
 
     if (element.defaultImportName)
-      return `import ${typeOnly}${element.defaultImportName}${
+      return `${importStatement} ${element.defaultImportName}${
         spaceConfig.beforeComma
       },${spaceConfig.afterComma}${element.namedBindings![0].name} as ${
         element.namedBindings![0].aliasName
@@ -143,7 +143,7 @@ export class InMemoryImportCreator implements ImportCreator {
         this.semicolonChar
       }`;
     else
-      return `import ${typeOnly}${element.namedBindings![0].name} as ${
+      return `${importStatement} ${element.namedBindings![0].name} as ${
         element.namedBindings![0].aliasName
       } from ${qMark}${element.moduleSpecifierName}${qMark}${
         this.semicolonChar
@@ -288,12 +288,12 @@ export class InMemoryImportCreator implements ImportCreator {
       const isLastNameBinding = ind === nameBindings.length - 1;
 
       const xLength = isLastNameBinding
-        ? x.length // last element, so we remove comma and space before comma
+        ? x.length // Last element, so we remove comma and space before comma.
         : x.length +
           this.importStringConfig.spacingPerImportExpression.beforeComma +
-          1; // 1 for comma
+          1; // 1 for comma.
 
-      // if we have first element in chunk then we need to consider after comma spaces
+      // If we have a first element in chunk then we need to consider after comma spaces.
       currentTotalLength = result[resultIndex]
         ? xLength +
           currentTotalLength +
@@ -307,6 +307,7 @@ export class InMemoryImportCreator implements ImportCreator {
       } else {
         resultIndex = result[resultIndex] ? resultIndex + 1 : resultIndex;
         result[resultIndex] = [x];
+
         if (xLength < maxLineLength) {
           currentTotalLength = xLength;
         } else {
@@ -338,18 +339,18 @@ export class InMemoryImportCreator implements ImportCreator {
     namedBindingString: string,
     isSingleLine: boolean
   ) {
+    const importStatement = this.getImportStatement(element);
     const qMark = this.getQuoteMark();
     const spaceConfig = this.getSpaceConfig();
-    const typeOnly = element.isTypeOnly ? 'type ' : ''; // TODO: A function for this
 
     if (element.defaultImportName)
       return isSingleLine
-        ? `import ${typeOnly}${element.defaultImportName}${spaceConfig.beforeComma},${spaceConfig.afterComma}{${spaceConfig.afterStartingBracket}${namedBindingString}${spaceConfig.beforeEndingBracket}} from ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`
-        : `import ${typeOnly}${element.defaultImportName}${spaceConfig.beforeComma},${spaceConfig.afterComma}{\n${namedBindingString}\n} from ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`;
+        ? `${importStatement} ${element.defaultImportName}${spaceConfig.beforeComma},${spaceConfig.afterComma}{${spaceConfig.afterStartingBracket}${namedBindingString}${spaceConfig.beforeEndingBracket}} from ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`
+        : `${importStatement} ${element.defaultImportName}${spaceConfig.beforeComma},${spaceConfig.afterComma}{\n${namedBindingString}\n} from ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`;
     else
       return isSingleLine
-        ? `import ${typeOnly}{${spaceConfig.afterStartingBracket}${namedBindingString}${spaceConfig.beforeEndingBracket}} from ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`
-        : `import ${typeOnly}{\n${namedBindingString}\n} from ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`;
+        ? `${importStatement} {${spaceConfig.afterStartingBracket}${namedBindingString}${spaceConfig.beforeEndingBracket}} from ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`
+        : `${importStatement} {\n${namedBindingString}\n} from ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`;
   }
 
   private getSpaceConfig() {
@@ -376,6 +377,13 @@ export class InMemoryImportCreator implements ImportCreator {
       ),
       tabSequence
     };
+  }
+
+  private getImportStatement(element: ImportElement): string {
+    const typeOnly = element.isTypeOnly ? 'type ' : '';
+
+    if (typeOnly) return `import type`;
+    else return `import`;
   }
 
   private getQuoteMark() {

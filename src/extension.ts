@@ -4,6 +4,7 @@ import { ImportSorterExtension } from './import-sorter-extension';
 
 export const activate = (context: ExtensionContext) => {
   const importSorterExtension = new ImportSorterExtension();
+
   importSorterExtension.initialize();
 
   const sortImportsCommand: Disposable = commands.registerCommand(
@@ -32,7 +33,5 @@ export const activate = (context: ExtensionContext) => {
   context.subscriptions.push(onWillSaveTextDocument);
 };
 
-// this method is called when your extension is deactivated
-export const deactivate = () => {
-  /* */
-};
+// This method is called when your extension is deactivated.
+export const deactivate = () => {};

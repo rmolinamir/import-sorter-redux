@@ -14,11 +14,11 @@ export class LineRange {
   }
 
   public isLineIntersecting(range: LineRange): boolean {
-    // line comparison
+    // Line comparison:
     const min = this.startLine < range.startLine ? this : range;
     const max = min === this ? range : this;
 
-    // lines do not intersect
+    // Lines do not intersect:
     if (min.endLine < max.startLine) return false;
     return true;
   }

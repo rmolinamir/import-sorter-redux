@@ -78,13 +78,16 @@ export class VSCodeConfigurationProvider implements ConfigurationProvider {
     const fileConfigMerged = Object.keys(fileConfigJsonObj)
       .map((key) => {
         const total = {};
+
         const keys = key.split('.').filter((str) => str !== 'importSorter');
+
         keys.reduce((sum: Record<PropertyKey, object>, currentKey, index) => {
           if (index === keys.length - 1)
             sum[currentKey] = fileConfigJsonObj[key];
           else sum[currentKey] = {};
           return sum[currentKey];
         }, total);
+
         return total;
       })
       .reduce((sum, currentObj) => merge(sum, currentObj), {});
@@ -110,14 +113,17 @@ export class VSCodeConfigurationProvider implements ConfigurationProvider {
       sortConfig,
       fileConfig.sortConfiguration || {}
     );
+
     const importStringConfiguration = merge(
       importStringConfig,
       fileConfig.importStringConfiguration || {}
     );
+
     const generalConfiguration = merge(
       generalConfig,
       fileConfig.generalConfiguration || {}
     );
+
     return {
       sortConfiguration,
       importStringConfiguration,
@@ -147,16 +153,19 @@ export class ImportSorterExtension {
     if (
       !window.activeTextEditor ||
       !this.isSortAllowed(window.activeTextEditor.document, false)
-    ) {
+    )
       return;
-    }
+
     this.configurationProvider.resetConfiguration();
+
     return this.sortActiveDocumentImports();
   }
 
   public sortImportsInDirectories(uri: Uri): Thenable<void> {
     this.configurationProvider.resetConfiguration();
+
     const sortImports$ = this.importRunner.sortImportsInDirectory(uri.fsPath);
+
     return window.withProgress(
       {
         location: ProgressLocation.Notification,
@@ -165,6 +174,7 @@ export class ImportSorterExtension {
       },
       (progress) => {
         progress.report({ increment: 0 });
+
         return sortImports$
           .pipe(
             mapObservable(() => 1),
@@ -186,12 +196,11 @@ export class ImportSorterExtension {
     const configuration = this.configurationProvider.getConfiguration();
     const isSortOnBeforeSaveEnabled =
       configuration.generalConfiguration.sortOnBeforeSave;
-    if (!isSortOnBeforeSaveEnabled) {
-      return;
-    }
-    if (!this.isSortAllowed(event.document, true)) {
-      return;
-    }
+
+    if (!isSortOnBeforeSaveEnabled) return;
+
+    if (!this.isSortAllowed(event.document, true)) return;
+
     return this.sortActiveDocumentImports(event);
   }
 
@@ -202,13 +211,13 @@ export class ImportSorterExtension {
         : window.activeTextEditor!.document;
 
       const text = doc.getText();
+
       const importData = this.importRunner.getSortImportData(
         doc.uri.fsPath,
         text
       );
-      if (!importData.isSortRequired) {
-        return;
-      }
+
+      if (!importData.isSortRequired) return;
 
       const deleteEdits = importData.rangesToDelete?.map((x) =>
         TextEdit.delete(
@@ -250,24 +259,20 @@ export class ImportSorterExtension {
     document: TextDocument,
     isFileExtensionErrorIgnored: boolean
   ): boolean {
-    if (!document) {
-      return false;
-    }
+    if (!document) return false;
 
     if (
       document.languageId === 'typescript' ||
       document.languageId === 'typescriptreact'
-    ) {
+    )
       return true;
-    }
 
-    if (isFileExtensionErrorIgnored) {
-      return false;
-    }
+    if (isFileExtensionErrorIgnored) return false;
 
     window.showErrorMessage(
       'Import Sorter currently only supports typescript (.ts) or typescriptreact (.tsx) language files'
     );
+
     return false;
   }
 }

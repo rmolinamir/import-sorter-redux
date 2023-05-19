@@ -1,12 +1,12 @@
 import { chain, cloneDeep, range as rangeLodash } from 'lodash';
 import { sep } from 'path';
 import {
-  empty as emptyObservable,
+  EMPTY as emptyObservable,
   merge as mergeObservable,
   Observable
 } from 'rxjs';
 import {
-  flatMap as flatMapObservable,
+  mergeMap as mergeMapObservable,
   mergeAll,
   switchMap as switchMapObservable
 } from 'rxjs/operators';
@@ -101,7 +101,7 @@ export class SimpleImportRunner implements ImportRunner {
       sortedImportsWithExcludedImports.groups
     );
 
-    // normalize imports by skipping lines which should not be touched
+    // Normalize imports by skipping lines which should not be touched.
     const fileSourceWithSkippedLineShiftArray = fileSource
       .split('\n')
       .slice(imports.firstImportLineNumber!);
@@ -164,10 +164,10 @@ export class SimpleImportRunner implements ImportRunner {
 
     sortResultClonned.groups.forEach((gr) => {
       gr.elements = gr.elements.filter((el) => {
-        // side effect import
+        // Side effect import.
         if (!el.hasFromKeyWord) return true;
 
-        // filtering name bindings
+        // Filtering name bindings.
         el.namedBindings = el.namedBindings?.filter((nameBinding) => {
           const isUnusedNameBinding = !usedTypeReferences.some(
             (reference) =>
@@ -186,7 +186,7 @@ export class SimpleImportRunner implements ImportRunner {
         )
           return true;
 
-        // if not default import and not side effect, then check name bindings
+        // If not a default import and not a side effect, then check name bindings.
         if (!el.namedBindings?.length) {
           unusedImportElements.push(el);
           return false;
@@ -206,7 +206,7 @@ export class SimpleImportRunner implements ImportRunner {
     const allFilePaths$ = this.allFilePathsUnderThePath$(startingSourcePath);
     return allFilePaths$.pipe(
       mergeAll(),
-      flatMapObservable((path) => this.sortFileImports$(path), 3)
+      mergeMapObservable((path) => this.sortFileImports$(path), 3)
     );
   }
 
@@ -214,15 +214,15 @@ export class SimpleImportRunner implements ImportRunner {
     return io.readFile$(fullFilePath).pipe(
       switchMapObservable((file) => {
         const sortedData = this.getSortedData(fullFilePath, file);
+
         if (sortedData.isSortRequired) {
           const sortedFullFileSource = this.getFullSortedSourceFile(
             file,
             sortedData
           );
+
           return io.writeFile$(fullFilePath, sortedFullFileSource);
-        } else {
-          return emptyObservable();
-        }
+        } else return emptyObservable;
       })
     );
   }

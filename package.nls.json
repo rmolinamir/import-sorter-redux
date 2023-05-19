@@ -1,6 +1,6 @@
 {
-  "configuration.title": "Import Sorter Configuration",
-  "commands.category": "TypeScript",
   "command.sortImports": "Sort Imports",
-  "command.sortImportsInDirectory": "Sort Imports (Directory Deep)"
+  "command.sortImportsInDirectory": "Sort Imports (Directory Deep)",
+  "commands.category": "TypeScript",
+  "configuration.title": "Import Sorter Configuration"
 }

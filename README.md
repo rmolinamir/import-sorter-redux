@@ -1,6 +1,6 @@
-# import-sorter
+# import-sorter-redux
 
-The `import-sorter` extension is a popular library that sorts TypeScript imports based on the provided configuration. The default configuration follows ESLint's `sort-imports` rules. The extension is compatible with Prettier, as long as the configuration settings of both tools are aligned.
+The `import-sorter-redux` extension is a powerful Visual Studio Code tool that brings back and enhances the functionality of the original [`import-sorter`](https://github.com/SoominHan/import-sorter) library. It provides seamless sorting of TypeScript imports based on a customizable configuration, allowing you to effortlessly maintain code organization.
 
 ## Examples
 

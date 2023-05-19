@@ -157,7 +157,7 @@ export class InMemoryImportSorter implements ImportSorter {
 
           return x[0];
         } else {
-          // removing duplicate name bindings
+          // Removing duplicate name bindings:
           const nameBindings = chain(x)
             .flatMap((y) => y.namedBindings)
             .uniqBy((y) => y?.name)

@@ -64,11 +64,11 @@ export class SimpleImportAstParser implements AstParser {
       textProcessing.getPositionByOffset(lastLeadingComment.range.end, text)
         .line + 1;
     if (firstNode.start.line - leadingCommentNextLine >= 1) {
-      // if we have leading comments, and there is at least one line which separates them from import, then we do not consider it
-      // to be a leading comment belonging to node
+      // If we have leading comments, and there is at least one line which separates them from the import,
+      // then we do not consider it to be a leading comment belonging to node.
       firstNode.importComment.leadingComments = [];
     } else {
-      // if we have leading comments then only take the last one;
+      // If we have leading comments then only take the last one.
       firstNode.importComment.leadingComments = [lastLeadingComment];
     }
   }
@@ -128,13 +128,13 @@ export class SimpleImportAstParser implements AstParser {
 
           this.getCodeLineNumbers(node, sourceFile);
 
-          // if we get import declaration then we do not want to do further delinting on the children of the node
+          // If we get an import declaration then we do not want to do further delinting on the children of the node.
           isSkipChildNode = true;
 
           break;
         }
         case ts.SyntaxKind.Identifier: {
-          // adding all identifiers(except from the ImportDeclarations). This is quite verbose, but seems to do the trick.
+          // Adding all identifiers (except for the ImportDeclarations). This is quite verbose, but seems to do the trick.
           usedTypeReferences.push((node as ts.Identifier).getText(sourceFile));
           break;
         }
