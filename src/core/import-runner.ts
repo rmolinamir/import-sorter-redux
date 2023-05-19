@@ -1,16 +1,9 @@
 import { chain, cloneDeep, range as rangeLodash } from 'lodash';
 import { sep } from 'path';
-import {
-  EMPTY as emptyObservable,
-  merge as mergeObservable,
-  Observable
-} from 'rxjs';
-import {
-  mergeMap as mergeMapObservable,
-  mergeAll,
-  switchMap as switchMapObservable
-} from 'rxjs/operators';
+import { merge as mergeObservable, Observable, of } from 'rxjs';
+import { mergeAll, mergeMap, switchMap } from 'rxjs/operators';
 
+import { allowedLanguages } from './allowed-languages';
 import { AstParser } from './ast-parser';
 import { io, textProcessing } from './helpers/helpers-public';
 import { ImportCreator } from './import-creator';
@@ -206,13 +199,15 @@ export class SimpleImportRunner implements ImportRunner {
     const allFilePaths$ = this.allFilePathsUnderThePath$(startingSourcePath);
     return allFilePaths$.pipe(
       mergeAll(),
-      mergeMapObservable((path) => this.sortFileImports$(path), 3)
+      mergeMap((path) => {
+        return this.sortFileImports$(path);
+      }, 3)
     );
   }
 
   private sortFileImports$(fullFilePath: string): Observable<void> {
     return io.readFile$(fullFilePath).pipe(
-      switchMapObservable((file) => {
+      switchMap((file) => {
         const sortedData = this.getSortedData(fullFilePath, file);
 
         if (sortedData.isSortRequired) {
@@ -222,7 +217,7 @@ export class SimpleImportRunner implements ImportRunner {
           );
 
           return io.writeFile$(fullFilePath, sortedFullFileSource);
-        } else return emptyObservable;
+        } else return of(undefined);
       })
     );
   }
@@ -260,11 +255,13 @@ export class SimpleImportRunner implements ImportRunner {
   ): Observable<string[]> {
     if (!startingSourcePath) throw new Error('No directory selected.');
 
-    const allFilesPatterns = ['**/*.ts', '**/*.tsx'];
+    const filePatterns = allowedLanguages.map(
+      ({ fileExtension }) => `**/*.${fileExtension}`
+    );
 
     const ignore: string[] = [];
 
-    const filesPaths$ = allFilesPatterns.map((pattern) =>
+    const filesPaths$ = filePatterns.map((pattern) =>
       io.filePaths$(startingSourcePath, pattern, ignore)
     );
 

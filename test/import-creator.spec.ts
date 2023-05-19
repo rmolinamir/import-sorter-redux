@@ -1,9 +1,10 @@
 import { expect } from 'chai';
+
 import {
+  defaultImportStringConfiguration,
   ImportElementGroup,
   ImportStringConfiguration,
-  InMemoryImportCreator,
-  defaultImportStringConfiguration
+  InMemoryImportCreator
 } from '../src/core/core-public';
 
 interface ImportCreatorTest {

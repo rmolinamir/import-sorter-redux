@@ -7,7 +7,7 @@ export function readFile$(
   filePath: string,
   encoding: BufferEncoding = 'utf-8'
 ): Observable<string> {
-  return Observable.create((observer: Observer<string>) => {
+  return new Observable((observer: Observer<string>) => {
     fs.readFile(filePath, { encoding }, (error, data) => {
       if (error) {
         observer.error(error);
@@ -20,7 +20,7 @@ export function readFile$(
 }
 
 export function writeFile$(filePath: string, data: string): Observable<void> {
-  return Observable.create((observer: Observer<void>) => {
+  return new Observable((observer: Observer<void>) => {
     fs.writeFile(filePath, data, (error) => {
       if (error) {
         observer.error(error);
@@ -41,23 +41,23 @@ export function filePaths$(
   pattern: string,
   ignore: string | string[]
 ): Observable<string[]> {
-  return Observable.create(async (observer: Observer<string[]>) => {
-    try {
-      const matches = await glob(pattern, {
-        cwd: startingSourcePath,
-        ignore,
-        nodir: true
+  return new Observable((observer: Observer<string[]>) => {
+    glob(pattern, {
+      cwd: startingSourcePath,
+      ignore,
+      nodir: true
+    })
+      .then((matches) => {
+        const fullPaths = matches.map((filePath) =>
+          getFullPath(startingSourcePath, filePath)
+        );
+
+        observer.next(fullPaths);
+
+        observer.complete();
+      })
+      .catch((error) => {
+        observer.error(error);
       });
-
-      const fullPaths = matches.map((filePath) =>
-        getFullPath(startingSourcePath, filePath)
-      );
-
-      observer.next(fullPaths);
-
-      observer.complete();
-    } catch (error) {
-      observer.error(error);
-    }
   });
 }

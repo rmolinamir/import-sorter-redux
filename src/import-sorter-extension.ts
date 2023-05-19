@@ -1,7 +1,8 @@
 import fs from 'fs';
 import { cloneDeep, merge } from 'lodash';
 import { sep } from 'path';
-import { delay, map as mapObservable, scan } from 'rxjs/operators';
+import { lastValueFrom } from 'rxjs';
+import { delay, map, scan } from 'rxjs/operators';
 import {
   Position,
   ProgressLocation,
@@ -15,6 +16,7 @@ import {
   workspace
 } from 'vscode';
 
+import { allowedLanguages } from './core/allowed-languages';
 import {
   defaultGeneralConfiguration,
   GeneralConfiguration,
@@ -51,25 +53,26 @@ export class VSCodeConfigurationProvider implements ConfigurationProvider {
 
     const generalConfig = cloneDeep(generalConfigProxy);
 
-    const configPath = `${workspace.rootPath}${sep}${generalConfig.configurationFilePath}`;
-    const isConfigExist = fs.existsSync(configPath);
+    const [{ uri: { path = workspace.rootPath ?? '' } = {} } = {}] =
+      workspace.workspaceFolders || [];
+
+    const configPath = `${path}${sep}${generalConfig.configurationFilePath}`;
+    const isConfigInWorkspace = fs.existsSync(configPath);
 
     if (
-      !isConfigExist &&
+      !isConfigInWorkspace &&
       generalConfig.configurationFilePath !==
         defaultGeneralConfiguration.configurationFilePath
     ) {
-      console.error(
-        'configurationFilePath is not found by the following path, import sorter will proceed with defaults from settings',
-        configPath
-      );
-      window.showErrorMessage(
-        'configurationFilePath is not found by the following path, import sorter will proceed with defaults from settings',
-        configPath
-      );
+      const errorMessage =
+        'Configuration file not found, the process will continue with the configuration from the settings.';
+
+      console.error(errorMessage, configPath);
+
+      window.showErrorMessage(errorMessage, configPath);
     }
 
-    const fileConfigurationString = isConfigExist
+    const fileConfigurationString = isConfigInWorkspace
       ? fs.readFileSync(configPath, 'utf8')
       : '{}';
 
@@ -162,29 +165,31 @@ export class ImportSorterExtension {
   }
 
   public sortImportsInDirectories(uri: Uri): Thenable<void> {
-    this.configurationProvider.resetConfiguration();
-
-    const sortImports$ = this.importRunner.sortImportsInDirectory(uri.fsPath);
-
     return window.withProgress(
       {
         location: ProgressLocation.Notification,
-        title: 'Import sorter: sorting...',
+        title: 'Import Sorter Redux',
         cancellable: false
       },
-      (progress) => {
-        progress.report({ increment: 0 });
+      async (progress) => {
+        this.configurationProvider.resetConfiguration();
 
-        return sortImports$
-          .pipe(
-            mapObservable(() => 1),
-            scan((acc, curr) => acc + curr, 0),
-            mapObservable((fileCount) =>
-              progress.report({ message: `${fileCount} - sorted` })
-            ),
-            delay(1000)
+        const sortImports$ = this.importRunner.sortImportsInDirectory(
+          uri.fsPath
+        );
+
+        return lastValueFrom(
+          sortImports$.pipe(
+            map(() => 1),
+            scan((total, increment) => total + increment, 0),
+            map((count) => {
+              progress.report({
+                message: `Sorting ${count} ${count > 1 ? 'files' : 'file'}...`
+              });
+            }),
+            delay(2000)
           )
-          .toPromise();
+        );
       }
     );
   }
@@ -193,7 +198,9 @@ export class ImportSorterExtension {
     event: TextDocumentWillSaveEvent
   ): void {
     this.configurationProvider.resetConfiguration();
+
     const configuration = this.configurationProvider.getConfiguration();
+
     const isSortOnBeforeSaveEnabled =
       configuration.generalConfiguration.sortOnBeforeSave;
 
@@ -248,9 +255,7 @@ export class ImportSorterExtension {
       }
     } catch (error) {
       window.showErrorMessage(
-        `Typescript import sorter failed with - ${
-          (error as Error).message
-        }. Please log a bug.`
+        `[ERROR] Import Sorter Redux: ${(error as Error).message}`
       );
     }
   }
@@ -261,16 +266,19 @@ export class ImportSorterExtension {
   ): boolean {
     if (!document) return false;
 
-    if (
-      document.languageId === 'typescript' ||
-      document.languageId === 'typescriptreact'
-    )
+    if (allowedLanguages.some(({ id }) => document.languageId === id))
       return true;
 
     if (isFileExtensionErrorIgnored) return false;
 
     window.showErrorMessage(
-      'Import Sorter currently only supports typescript (.ts) or typescriptreact (.tsx) language files'
+      'Import Sorter Redux currently only supports the following languages: '
+        .concat(
+          allowedLanguages
+            .map(({ id, fileExtension }) => `${id} (.${fileExtension})`)
+            .join(', ')
+        )
+        .concat('.')
     );
 
     return false;

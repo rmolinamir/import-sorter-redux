@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+
 import { SimpleImportAstParser } from '../src/core/ast-parser';
 import { ImportElement } from '../src/core/core-public';
 

@@ -1,3 +1,4 @@
+export * from './allowed-language';
 export * from './comment';
 export * from './import-element';
 export * from './parsed-import-values';

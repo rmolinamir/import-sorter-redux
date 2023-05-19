@@ -4,21 +4,35 @@ The `import-sorter-redux` extension is a powerful Visual Studio Code tool that b
 
 ## Examples
 
-Different types of sorting in a file:
-![alt text](./assets/import-sorter-redux-example-1.gif "Import Sorter")
+*Different types of sorting in a file*
+![alt text](./assets/import-sorter-redux-example-1.gif "Import Sorter Redux")
 
-Deep directory sorting:
-![alt text](./assets/import-sorter-redux-example-2.gif "Import Sorter Directory")
+*Directory sorting*
+![alt text](./assets/import-sorter-redux-example-2.gif "Import Sorter Redux Directory")
 
-Sorting before save (disabled by default):
+*Sorting before save (disabled by default)*
 ![alt text](./assets/import-sorter-redux-example-3.gif "Sort on safe")
 
-Prettier integration:
+*Prettier integration*
 ![alt text](./assets/import-sorter-redux-example-4.gif "Prettier integration")
 
 ## Features
 
-Currently, the sorting functionality only supports the TypeScript language.
+The `import-sorter-redux` extension provides powerful sorting functionality for TypeScript and JavaScript files. Here are its key features:
+
+* Sorts imports in files based on a customizable configuration.
+* Sorts imports in directories and subdirectories.
+* Supports integration with Prettier for consistent code formatting.
+* Allows the use of custom configuration files.
+* Supports defining custom ordering rules.
+* Provides exclusion patterns for selective sorting.
+* Sorts import members within curly brackets.
+* Sorts import paths.
+* Combines imports with the same path for cleaner organization.
+* Removes unused imports.
+* Removes unused default imports.
+* Handles sorting of import paths with side effects.
+* Handles sorting of import paths with side effects and unused default imports.
 
 ## Usage
 
@@ -28,7 +42,7 @@ Alternatively, you can enable the option `importSorter.generalConfiguration.sort
 
 You can also customize keybindings. The default keybinding is `ctrl + alt + o`.
 
-For deep directory sorting, you can use the feature accessible from the `resource explorer`. Right-click and select `Sort imports (Directory deep)`.
+For directory sorting, you can use the feature accessible from the `resource explorer`. Right-click and select `Sort Imports in Directory`.
 
 **Note:** Before performing global source code sorting, ensure that the project is managed by a version control system. The sorter will sort and rewrite the source code without prompting for confirmation.
 
@@ -166,7 +180,7 @@ An example of the default configuration is provided below. For available options
 
 ## Configuration Details
 
-The Import Sorter extension provides several configuration options to customize its behavior. These settings allow you to control the import sorting process according to your preferences. Below, we describe the available settings in detail:
+The Import Sorter Redux extension provides several configuration options to customize its behavior. These settings allow you to control the import sorting process according to your preferences. Below, we describe the available settings in detail:
 
 ### Configuration File Path
 
@@ -265,7 +279,7 @@ The `importSorter.importStringConfiguration.tabType` setting is an enum that can
 
 ### Example: Default Setup for Prettier Integration
 
-To align the Import Sorter behavior with the defaults of Prettier, you can configure the following settings:
+To align the Import Sorter Redux behavior with the defaults of Prettier, you can configure the following settings:
 
 ```json
 {
