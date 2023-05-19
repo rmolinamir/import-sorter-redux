@@ -20,7 +20,9 @@ export class InMemoryImportCreator implements ImportCreator {
 
   public createImportText(groups: ImportElementGroup[]): string {
     this.assertIsInitialized();
+
     const importLines: string[] = [];
+
     groups.forEach((x, i, data) => {
       const importStrings = this.createImportStrings(x.elements);
       const line =
@@ -32,6 +34,7 @@ export class InMemoryImportCreator implements ImportCreator {
       importLines.push(line);
       importLines.unshift(...importStrings.tripleSlashDirectives);
     });
+
     return (
       importLines.join('\n') +
       this.repeatString(
@@ -46,11 +49,14 @@ export class InMemoryImportCreator implements ImportCreator {
     tripleSlashDirectives: string[];
   } {
     this.assertIsInitialized();
+
     const tripleSlashDirectives: string[] = [];
+
     const imports = element.map((x) => {
       const importString = this.createSingleImportString(x);
 
       const leadingComments: string[] = [];
+
       x.importComment.leadingComments.forEach((comment) => {
         if (!comment.isTripleSlashDirective) {
           leadingComments.push(comment.text);
@@ -58,12 +64,15 @@ export class InMemoryImportCreator implements ImportCreator {
           tripleSlashDirectives.push(comment.text);
         }
       });
+
       let leadingCommentText = leadingComments.join('\n');
+
       leadingCommentText = leadingCommentText
         ? leadingCommentText + '\n'
         : leadingCommentText;
 
       const trailingComments: string[] = [];
+
       x.importComment.trailingComments.forEach((comment) => {
         if (!comment.isTripleSlashDirective) {
           trailingComments.push(comment.text);
@@ -71,15 +80,19 @@ export class InMemoryImportCreator implements ImportCreator {
           tripleSlashDirectives.push(comment.text);
         }
       });
+
       let trailingCommentText = trailingComments.join('\n');
+
       trailingCommentText = trailingCommentText
         ? ' ' + trailingCommentText
         : trailingCommentText;
 
       const importWithComments =
         leadingCommentText + importString + trailingCommentText;
+
       return importWithComments;
     });
+
     return { imports, tripleSlashDirectives };
   }
 
@@ -91,43 +104,46 @@ export class InMemoryImportCreator implements ImportCreator {
 
   private createSingleImportString(element: ImportElement) {
     const qMark = this.getQuoteMark();
-    if (!element.hasFromKeyWord) {
-      return `import ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`;
-    }
+    const typeOnly = element.isTypeOnly ? 'type ' : ''; // TODO: A function for this
+
+    if (!element.hasFromKeyWord)
+      return `import ${typeOnly}${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`;
 
     if (element.namedBindings && element.namedBindings.length > 0) {
       const isStarImport = element.namedBindings.some((x) => x.name === '*');
-      if (isStarImport) {
-        return this.createStarImport(element);
-      }
+
+      if (isStarImport) return this.createStarImport(element);
+
       const curlyBracketElement = this.createCurlyBracketElement(element);
+
       return this.createImportWithCurlyBracket(
         element,
         curlyBracketElement.line,
         curlyBracketElement.isSingleLine
       );
     }
-    if (element.defaultImportName) {
-      return `import ${element.defaultImportName} from ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`;
-    } else {
-      return `import {} from ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`;
-    }
+
+    if (element.defaultImportName)
+      return `import ${typeOnly}${element.defaultImportName} from ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`;
+    else
+      return `import ${typeOnly}{} from ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`;
   }
 
   private createStarImport(element: ImportElement) {
     const qMark = this.getQuoteMark();
     const spaceConfig = this.getSpaceConfig();
+    const typeOnly = element.isTypeOnly ? 'type ' : ''; // TODO: A function for this
 
     if (element.defaultImportName)
-      return `import ${element.defaultImportName}${spaceConfig.beforeComma},${
-        spaceConfig.afterComma
-      }${element.namedBindings![0].name} as ${
+      return `import ${typeOnly}${element.defaultImportName}${
+        spaceConfig.beforeComma
+      },${spaceConfig.afterComma}${element.namedBindings![0].name} as ${
         element.namedBindings![0].aliasName
       } from ${qMark}${element.moduleSpecifierName}${qMark}${
         this.semicolonChar
       }`;
     else
-      return `import ${element.namedBindings![0].name} as ${
+      return `import ${typeOnly}${element.namedBindings![0].name} as ${
         element.namedBindings![0].aliasName
       } from ${qMark}${element.moduleSpecifierName}${qMark}${
         this.semicolonChar
@@ -136,13 +152,16 @@ export class InMemoryImportCreator implements ImportCreator {
 
   private createCurlyBracketElement(element: ImportElement) {
     const spaceConfig = this.getSpaceConfig();
+
     const nameBindingStringsExpr = chain(element.namedBindings).map((x) =>
       x.aliasName ? `${x.name} as ${x.aliasName}` : x.name
     );
+
     const resultingChunks = this.createNameBindingChunks(
       nameBindingStringsExpr,
       element
     );
+
     return resultingChunks.isSingleLine
       ? { line: `${resultingChunks.nameBindings[0]}`, isSingleLine: true }
       : {
@@ -165,12 +184,11 @@ export class InMemoryImportCreator implements ImportCreator {
     if (
       this.importStringConfig.maximumNumberOfImportExpressionsPerLine.type ===
       'words'
-    ) {
+    )
       return this.createNameBindingChunksByWords(
         nameBindings,
         this.importStringConfig.maximumNumberOfImportExpressionsPerLine.count
       );
-    }
 
     return this.createNameBindingChunksByLength(nameBindings, element);
   }
@@ -183,13 +201,16 @@ export class InMemoryImportCreator implements ImportCreator {
     isSingleLine: boolean;
   } {
     const spaceConfig = this.getSpaceConfig();
+
     const beforeCommaAndAfterPart = `${spaceConfig.beforeComma},${spaceConfig.afterComma}`;
+
     const nameBindingsResult = chain(nameBindings)
       .chunk(maximumNumberOfWordsBeforeBreak || 1)
       .map((x) => x.join(beforeCommaAndAfterPart))
       .value();
 
     const isSingleLine = nameBindings.length <= maximumNumberOfWordsBeforeBreak;
+
     this.appendTrailingComma(nameBindingsResult, isSingleLine);
 
     return {
@@ -207,21 +228,29 @@ export class InMemoryImportCreator implements ImportCreator {
   } {
     const max =
       this.importStringConfig.maximumNumberOfImportExpressionsPerLine.count;
+
     const spaceConfig = this.getSpaceConfig();
+
     const beforeCommaAndAfterPart = `${spaceConfig.beforeComma},${spaceConfig.afterComma}`;
+
     const insideCurlyString = nameBindings.join(beforeCommaAndAfterPart);
+
     const singleLineImport = this.createImportWithCurlyBracket(
       element,
       insideCurlyString,
       true
     );
+
     const isSingleLine =
       this.importStringConfig.trailingComma === 'always'
         ? singleLineImport.length < max
         : singleLineImport.length <= max;
+
     if (isSingleLine) {
       const nameBindingsResult = [insideCurlyString];
+
       this.appendTrailingComma(nameBindingsResult, true);
+
       return {
         nameBindings: nameBindingsResult,
         isSingleLine: true
@@ -234,6 +263,7 @@ export class InMemoryImportCreator implements ImportCreator {
     ) {
       return this.createNameBindingChunksByWords(nameBindings, 0);
     }
+
     if (
       this.importStringConfig.maximumNumberOfImportExpressionsPerLine.type ===
       'newLineEachExpressionAfterCountLimitExceptIfOnlyOne'
@@ -246,10 +276,14 @@ export class InMemoryImportCreator implements ImportCreator {
     }
 
     const result: string[][] = [];
+
     let resultIndex = 0;
     let currentTotalLength = 0;
+
     const maxLineLength = max - this.importStringConfig.tabSize;
+
     this.appendTrailingComma(nameBindings, false);
+
     nameBindings.forEach((x, ind) => {
       const isLastNameBinding = ind === nameBindings.length - 1;
 
@@ -281,6 +315,7 @@ export class InMemoryImportCreator implements ImportCreator {
         }
       }
     });
+
     return {
       nameBindings: result.map((x) => x.join(beforeCommaAndAfterPart)),
       isSingleLine: false
@@ -305,17 +340,16 @@ export class InMemoryImportCreator implements ImportCreator {
   ) {
     const qMark = this.getQuoteMark();
     const spaceConfig = this.getSpaceConfig();
-    if (element.defaultImportName) {
+    const typeOnly = element.isTypeOnly ? 'type ' : ''; // TODO: A function for this
+
+    if (element.defaultImportName)
       return isSingleLine
-        ? // tslint:disable-next-line:max-line-length
-          `import ${element.defaultImportName}${spaceConfig.beforeComma},${spaceConfig.afterComma}{${spaceConfig.afterStartingBracket}${namedBindingString}${spaceConfig.beforeEndingBracket}} from ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`
-        : // tslint:disable-next-line:max-line-length
-          `import ${element.defaultImportName}${spaceConfig.beforeComma},${spaceConfig.afterComma}{\n${namedBindingString}\n} from ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`;
-    }
-    return isSingleLine
-      ? // tslint:disable-next-line:max-line-length
-        `import {${spaceConfig.afterStartingBracket}${namedBindingString}${spaceConfig.beforeEndingBracket}} from ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`
-      : `import {\n${namedBindingString}\n} from ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`;
+        ? `import ${typeOnly}${element.defaultImportName}${spaceConfig.beforeComma},${spaceConfig.afterComma}{${spaceConfig.afterStartingBracket}${namedBindingString}${spaceConfig.beforeEndingBracket}} from ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`
+        : `import ${typeOnly}${element.defaultImportName}${spaceConfig.beforeComma},${spaceConfig.afterComma}{\n${namedBindingString}\n} from ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`;
+    else
+      return isSingleLine
+        ? `import ${typeOnly}{${spaceConfig.afterStartingBracket}${namedBindingString}${spaceConfig.beforeEndingBracket}} from ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`
+        : `import ${typeOnly}{\n${namedBindingString}\n} from ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`;
   }
 
   private getSpaceConfig() {

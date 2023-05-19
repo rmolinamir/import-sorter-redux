@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import { SimpleImportAstParser } from '../src/core/ast-parser';
 import { ImportElement } from '../src/core/core-public';
 
@@ -7,7 +8,7 @@ interface AstTest {
   expected: ImportElement;
 }
 
-describe('AstWalker tests', () => {
+suite('AstWalker tests', () => {
   const testCases: AstTest[] = [
     {
       testName: 'test1a',
@@ -16,6 +17,7 @@ describe('AstWalker tests', () => {
         endPosition: { line: 0, character: 40 },
         moduleSpecifierName: 'test.js',
         hasFromKeyWord: true,
+        isTypeOnly: false,
         namedBindings: [
           { name: 'a', aliasName: null },
           { name: 'c', aliasName: 'cc' },
@@ -42,6 +44,7 @@ describe('AstWalker tests', () => {
         startPosition: { line: 1, character: 12 },
         endPosition: { line: 4, character: 31 },
         hasFromKeyWord: true,
+        isTypeOnly: false,
         namedBindings: [
           { name: 'a', aliasName: null },
           { name: 'c', aliasName: 'cc' },
@@ -71,6 +74,7 @@ describe('AstWalker tests', () => {
         endPosition: { line: 0, character: 39 },
         moduleSpecifierName: 'test.js',
         hasFromKeyWord: true,
+        isTypeOnly: false,
         namedBindings: [
           { name: 'a', aliasName: null },
           { name: 'c', aliasName: 'cc' },
@@ -98,6 +102,7 @@ describe('AstWalker tests', () => {
         startPosition: { line: 2, character: 12 },
         endPosition: { line: 5, character: 31 },
         hasFromKeyWord: true,
+        isTypeOnly: false,
         namedBindings: [
           { name: 'a', aliasName: null },
           { name: 'c', aliasName: 'cc' },
@@ -130,6 +135,25 @@ describe('AstWalker tests', () => {
           ]
         }
       }
+    },
+    {
+      testName: 'test1e',
+      text: `import type { a, b } from "test.js"`,
+      expected: {
+        endPosition: { line: 0, character: 35 },
+        moduleSpecifierName: 'test.js',
+        hasFromKeyWord: true,
+        isTypeOnly: true,
+        namedBindings: [
+          { name: 'a', aliasName: null },
+          { name: 'b', aliasName: null }
+        ],
+        startPosition: { line: 0, character: 0 },
+        importComment: {
+          leadingComments: [],
+          trailingComments: []
+        }
+      }
     }
   ];
 
@@ -144,11 +168,11 @@ describe('AstWalker tests', () => {
     text: string,
     expected: ImportElement
   ) => {
-    test(`AstWalker:  ${testName} produces correct result`, () => {
+    test(`AstWalker: ${testName} produces correct result`, () => {
       const imports = getImports(text);
 
-      expect(imports.importElements).toHaveLength(1);
-      expect(imports.importElements[0]).toStrictEqual(expected);
+      expect(imports.importElements).to.have.lengthOf(1);
+      expect(imports.importElements[0]).to.deep.equal(expected);
     });
   };
 

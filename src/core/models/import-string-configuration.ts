@@ -20,22 +20,3 @@ export interface ImportStringConfiguration {
     afterComma: number;
   };
 }
-
-export const defaultImportStringConfiguration: ImportStringConfiguration = {
-  tabSize: 4,
-  tabType: 'space',
-  numberOfEmptyLinesAfterAllImports: 1,
-  trailingComma: 'none',
-  quoteMark: 'single',
-  maximumNumberOfImportExpressionsPerLine: {
-    count: 100,
-    type: 'maxLineLength'
-  },
-  hasSemicolon: true,
-  spacingPerImportExpression: {
-    afterStartingBracket: 1,
-    beforeEndingBracket: 1,
-    beforeComma: 0,
-    afterComma: 1
-  }
-};

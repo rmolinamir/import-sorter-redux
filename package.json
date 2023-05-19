@@ -43,11 +43,11 @@
     "lint": "tsc --noEmit && eslint",
     "prebuild": "rm -rf tsconfig.build.tsbuildinfo ./out",
     "prepublish": "pnpm build",
-    "postinstall": "node ./node_modules/vscode/bin/install",
     "release:dry": "pnpm release-it --dry-run",
     "release": "pnpm release-it",
-    "test:watch": "pnpm jest --watch",
-    "test": "pnpm jest",
+    "test": "pnpm mocha",
+    "test:watch": "pnpm mocha -- mocha",
+    "test:vscode": "node out/test/main.js",
     "watch": "tsc --project tsconfig.build.json --watch"
   },
   "dependencies": {
@@ -58,21 +58,23 @@
   },
   "devDependencies": {
     "@config/eslint": "workspace:*",
-    "@config/jest": "workspace:*",
+    "@config/mocha": "workspace:*",
     "@config/tsconfig": "workspace:*",
     "@faker-js/faker": "~8.0.1",
-    "@jest/globals": "~29.5.0",
     "@release-it/conventional-changelog": "~5.1.1",
-    "@types/jest": "~29.5.1",
+    "@types/chai": "~4.3.5",
     "@types/lodash": "4.14.194",
-    "@types/node": "~20.2.0",
+    "@types/mocha": "~10.0.1",
+    "@types/node": "~20.2.1",
+    "@types/vscode": "~1.78.0",
+    "@vscode/test-electron": "~2.3.2",
+    "chai": "~4.3.7",
     "commitizen": "~4.3.0",
     "cz-conventional-changelog": "~3.3.0",
-    "jest": "~29.5.0",
+    "mocha": "~10.2.0",
     "release-it": "~15.10.3",
-    "ts-jest": "~29.1.0",
-    "vscode": "~1.1.37",
-    "vscode-nls": "~2.0.2"
+    "vscode-nls": "~5.2.0",
+    "vscode-test": "~1.6.1"
   },
   "config": {
     "commitizen": {

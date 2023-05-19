@@ -41,3 +41,6 @@ tmp
 
 # private
 .private
+
+# vscode
+.vscode-test

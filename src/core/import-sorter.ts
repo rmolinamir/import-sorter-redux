@@ -135,7 +135,6 @@ export class InMemoryImportSorter implements ImportSorter {
       .groupBy((x) => x.moduleSpecifierName)
       .map((x: ImportElement[]) => {
         if (x.length > 1) {
-          // removing duplicates by module specifiers
           const nameBindings = chain(x)
             .flatMap((y) => y.namedBindings)
             .uniqBy((y) => y?.name)
@@ -146,6 +145,7 @@ export class InMemoryImportSorter implements ImportSorter {
               !isNil(y.defaultImportName) &&
               !(y.defaultImportName.trim() === '')
           );
+
           const defaultImportName = defaultImportElement
             ? defaultImportElement.defaultImportName
             : null;
@@ -165,9 +165,11 @@ export class InMemoryImportSorter implements ImportSorter {
 
           x[0].namedBindings = nameBindings as ImportElement['namedBindings'];
         }
+
         return x[0];
       })
       .value();
+
     return {
       joinedExpr: chain(joined),
       duplicates

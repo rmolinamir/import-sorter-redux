@@ -1,8 +1,9 @@
+import { expect } from 'chai';
 import {
-  defaultImportStringConfiguration,
   ImportElementGroup,
   ImportStringConfiguration,
-  InMemoryImportCreator
+  InMemoryImportCreator,
+  defaultImportStringConfiguration
 } from '../src/core/core-public';
 
 interface ImportCreatorTest {
@@ -15,7 +16,7 @@ interface ImportCreatorTest {
 const createConfiguration = (partialConfig: ImportStringConfiguration) =>
   Object.assign({}, defaultImportStringConfiguration, partialConfig);
 
-describe('Import Creator Tests', () => {
+suite('Import Creator Tests', () => {
   const testCases: ImportCreatorTest[] = [
     {
       testName: 'test0',
@@ -34,6 +35,7 @@ describe('Import Creator Tests', () => {
               startPosition: { line: 0, character: 0 },
               endPosition: { line: 0, character: 53 },
               hasFromKeyWord: true,
+              isTypeOnly: false,
               defaultImportName: 't',
               namedBindings: [
                 { name: 'B', aliasName: null },
@@ -69,6 +71,7 @@ describe('Import Creator Tests', () => {
               startPosition: { line: 0, character: 0 },
               endPosition: { line: 0, character: 70 },
               hasFromKeyWord: true,
+              isTypeOnly: false,
               namedBindings: [
                 { name: 'ChangeDetectionStrategy', aliasName: null },
                 { name: 'DebugElement', aliasName: null }
@@ -103,6 +106,7 @@ describe('Import Creator Tests', () => {
               startPosition: { line: 0, character: 0 },
               endPosition: { line: 0, character: 70 },
               hasFromKeyWord: true,
+              isTypeOnly: false,
               namedBindings: [
                 { name: 'ChangeDetectionStrategy', aliasName: null },
                 { name: 'DebugElement', aliasName: null }
@@ -137,6 +141,7 @@ describe('Import Creator Tests', () => {
               startPosition: { line: 0, character: 0 },
               endPosition: { line: 0, character: 70 },
               hasFromKeyWord: true,
+              isTypeOnly: false,
               namedBindings: [
                 { name: 'ChangeDetectionStrategy', aliasName: null },
                 { name: 'DebugElement', aliasName: null }
@@ -171,6 +176,7 @@ describe('Import Creator Tests', () => {
               startPosition: { line: 0, character: 0 },
               endPosition: { line: 0, character: 70 },
               hasFromKeyWord: true,
+              isTypeOnly: false,
               namedBindings: [
                 { name: 'ChangeDetectionStrategy', aliasName: null },
                 { name: 'DebugElement', aliasName: null }
@@ -205,6 +211,7 @@ describe('Import Creator Tests', () => {
               startPosition: { line: 0, character: 0 },
               endPosition: { line: 0, character: 70 },
               hasFromKeyWord: true,
+              isTypeOnly: false,
               namedBindings: [
                 { name: 'ChangeDetectionStrategy', aliasName: null },
                 { name: 'DebugElement', aliasName: null }
@@ -239,6 +246,7 @@ describe('Import Creator Tests', () => {
               startPosition: { line: 0, character: 0 },
               endPosition: { line: 0, character: 70 },
               hasFromKeyWord: true,
+              isTypeOnly: false,
               namedBindings: [
                 { name: 'ChangeDetectionStrategy', aliasName: null },
                 { name: 'DebugElement', aliasName: null }
@@ -273,6 +281,7 @@ describe('Import Creator Tests', () => {
               startPosition: { line: 0, character: 0 },
               endPosition: { line: 0, character: 70 },
               hasFromKeyWord: true,
+              isTypeOnly: false,
               namedBindings: [
                 { name: 'ChangeDetectionStrategy', aliasName: null },
                 { name: 'DebugElement', aliasName: null }
@@ -307,6 +316,7 @@ describe('Import Creator Tests', () => {
               startPosition: { line: 0, character: 0 },
               endPosition: { line: 0, character: 69 },
               hasFromKeyWord: true,
+              isTypeOnly: false,
               namedBindings: [
                 { name: 'ChangeDetectionStrategy', aliasName: null },
                 { name: 'DebugElement', aliasName: null }
@@ -341,6 +351,7 @@ describe('Import Creator Tests', () => {
               startPosition: { line: 0, character: 0 },
               endPosition: { line: 0, character: 40 },
               hasFromKeyWord: true,
+              isTypeOnly: false,
               namedBindings: [
                 { name: 'a', aliasName: null },
                 { name: 'b', aliasName: null },
@@ -357,6 +368,34 @@ describe('Import Creator Tests', () => {
         }
       ],
       expected: "import {\n    a, b,\n    c\n} from '@angular/core';"
+    },
+    {
+      testName: 'test10 - import string is type only',
+      config: createConfiguration({} as ImportStringConfiguration),
+      elementGroups: [
+        {
+          elements: [
+            {
+              moduleSpecifierName: 'foo',
+              startPosition: { line: 0, character: 0 },
+              endPosition: { line: 0, character: 40 },
+              hasFromKeyWord: true,
+              isTypeOnly: true,
+              namedBindings: [
+                { name: 'a', aliasName: null },
+                { name: 'b', aliasName: null }
+              ],
+              importComment: {
+                leadingComments: [],
+                trailingComments: []
+              }
+            }
+          ],
+          numberOfEmptyLinesAfterGroup: 0,
+          customOrderRule: null
+        }
+      ],
+      expected: "import type { a, b } from 'foo';\n"
     }
   ];
 
@@ -377,7 +416,7 @@ describe('Import Creator Tests', () => {
   ) => {
     test(`ImportCreator : ${testName} produces correct string`, () => {
       const importText = getImportText(groups, config);
-      expect(importText).toStrictEqual(expected);
+      expect(importText).to.equal(expected);
     });
   };
 

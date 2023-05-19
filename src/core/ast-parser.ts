@@ -193,26 +193,29 @@ export class SimpleImportAstParser implements AstParser {
             .getFullText(sourceFile)
             .trim();
 
+    const importClause = importNode.importDeclaration.importClause;
+
     const result: ImportElement = {
       moduleSpecifierName,
       startPosition: importNode.start,
       endPosition: importNode.end,
       hasFromKeyWord: false,
+      isTypeOnly: false,
       namedBindings: [],
       importComment: importNode.importComment
     };
 
-    const importClause = importNode.importDeclaration.importClause;
-    if (!importClause) {
-      return result;
-    }
+    if (!importClause) return result;
+
+    result.isTypeOnly = importClause.isTypeOnly;
+
     if (importClause.name) {
       result.hasFromKeyWord = true;
       result.defaultImportName = importClause.name.text;
     }
-    if (!importClause.namedBindings) {
-      return result;
-    }
+
+    if (!importClause.namedBindings) return result;
+
     result.hasFromKeyWord = true;
 
     if (importClause.namedBindings.kind === ts.SyntaxKind.NamespaceImport) {

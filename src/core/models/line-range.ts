@@ -4,14 +4,22 @@ export class LineRange {
   public endLine!: number;
   public endCharacter!: number;
 
+  constructor(
+    data: Pick<
+      LineRange,
+      'startLine' | 'startCharacter' | 'endLine' | 'endCharacter'
+    >
+  ) {
+    Object.assign(this, data);
+  }
+
   public isLineIntersecting(range: LineRange): boolean {
     // line comparison
     const min = this.startLine < range.startLine ? this : range;
     const max = min === this ? range : this;
+
     // lines do not intersect
-    if (min.endLine < max.startLine) {
-      return false;
-    }
+    if (min.endLine < max.startLine) return false;
     return true;
   }
 
@@ -25,14 +33,5 @@ export class LineRange {
       endLine: max.endLine,
       endCharacter: max.endCharacter
     });
-  }
-
-  constructor(
-    json: Pick<
-      LineRange,
-      'startLine' | 'startCharacter' | 'endLine' | 'endCharacter'
-    >
-  ) {
-    Object.assign(this, json);
   }
 }

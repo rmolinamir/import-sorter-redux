@@ -1,17 +1,16 @@
 # import-sorter
 
-Extension which sorts TypeScript imports according to the configuration provided. The configuration defaults follow ESLint sort-imports rules.
-Configuration supports regex functions to set sorting priority and rules. The extension can work with prettier as long as the configuration settings of both are aligned.
+The `import-sorter` extension is a popular library that sorts TypeScript imports based on the provided configuration. The default configuration follows ESLint's `sort-imports` rules. The extension is compatible with Prettier, as long as the configuration settings of both tools are aligned.
 
 ## Examples
 
-Different sort types in file:
+Different types of sorting in a file:
 ![alt text](./assets/import-sorter-example-1.gif "Import Sorter")
 
-Deep directory sort:
+Deep directory sorting:
 ![alt text](./assets/import-sorter-example-2.gif "Import Sorter Directory")
 
-Sort on before safe `(off by default)`:
+Sorting before save (disabled by default):
 ![alt text](./assets/import-sorter-example-3.gif "Sort on safe")
 
 Prettier integration:
@@ -19,23 +18,56 @@ Prettier integration:
 
 ## Features
 
-For now sorting supports only typescript language.
+Currently, the sorting functionality only supports the TypeScript language.
 
-## Command
+## Usage
 
-To run the sorter use `Sort Imports` command from the `Command Palette` (Ctrl+Shift+P).
+To run the sorter, use the `Sort Imports` command from the `Command Palette` (Ctrl+Shift+P).
 
-Alternatively, you can set `importSorter.generalConfiguration.sortOnBeforeSave` to `true`, which would
-trigger sorting before each save operation.
+Alternatively, you can enable the option `importSorter.generalConfiguration.sortOnBeforeSave` to automatically trigger sorting before each save operation.
 
-Also you could use/redefine keybindings. The default one is `ctrl + alt + o`.
+You can also customize keybindings. The default keybinding is `ctrl + alt + o`.
 
-You can also do the `sort in deep on the directory level`. The feature is accessible from the `resource explorer`. To run right click and select: `Sort imports (Directory deep)`.
-`!!!Do make sure that the project is managed by some version control system` before performing the global source code sort. The sorter will sort and rewrite the sources without any prompt for the action confirmation.
+For deep directory sorting, you can use the feature accessible from the `resource explorer`. Right-click and select `Sort imports (Directory deep)`.
+
+**Note:** Before performing global source code sorting, ensure that the project is managed by a version control system. The sorter will sort and rewrite the source code without prompting for confirmation.
+
+## Running Tests
+
+### Test Explorer
+
+To facilitate running tests in VS Code, follow these steps:
+
+1. Install the [Test Explorer UI](https://marketplace.visualstudio.com/items?itemName=hbenl.vscode-test-explorer) extension from the Visual Studio Code Marketplace.
+2. Install the [Mocha Test Explorer](https://marketplace.visualstudio.com/items?itemName=hbenl.vscode-mocha-test-adapter) extension from the Visual Studio Code Marketplace.
+3. Once both extensions are installed, you can conveniently execute your tests using the [Testing](https://marketplace.visualstudio.com/items?itemName=hbenl.vscode-test-explorer) view in VS Code.
+
+By following these steps, you can utilize the Test Explorer UI and Mocha Test Explorer extensions to streamline the process of running tests directly within the Testing view in VS Code, simplifying test execution and enhancing your testing workflow.
+
+### `vscode-test` Framework
+
+To run tests for your VS Code extension using the `vscode-test` framework, follow these steps:
+
+1. Open the debug view by pressing `Ctrl+Shift+D` (`Cmd+Shift+D` on Mac).
+2. From the launch configuration dropdown, select `Launch Tests`.
+3. Press `F5` to execute the tests in a new window with your extension loaded.
+4. The test results will be displayed in the debug console.
+5. To modify existing tests or add new ones, navigate to the `test/extension.test.ts` file or create new test files within the `test` folder.
+   * Test files should follow the naming pattern `**.test.ts` to be recognized by the test runner.
+   * You can organize your tests into subfolders within the `test` folder according to your preferred structure.
+
+By following these steps, you can leverage the `vscode-test` framework to execute and monitor tests for your VS Code extension, making it easier to develop and maintain a robust extension with reliable test coverage.
+
+Here are some additional tips for running tests:
+
+* You can run a single test by clicking the green play button next to the test in the Test Explorer.
+* You can run a group of tests by selecting the tests in the Test Explorer and clicking the green play button.
+* You can run all tests by clicking the green play button at the top of the Test Explorer.
+* You can debug tests by setting breakpoints in your test code and then clicking the green play button in the Test Explorer.
 
 ## Extension Settings
 
-an example of default configuration is provided bellow. For available options have a look at vs code settings(it should show available settings when you search for importSorter)
+An example of the default configuration is provided below. For available options, refer to VS Code settings (you can search for `importSorter` to find the available settings).
 
 ```json
   // Default file configuration name
@@ -83,16 +115,16 @@ an example of default configuration is provided bellow. For available options ha
   // If always/multiLine then adds a trailing comma at the end of the imports for 'single and multi' and 'multi-line' imports respectively. Default is none therefore no trailing comma
   "importSorter.importStringConfiguration.trailingComma": "none",
 
-  // The default number of empty lines after any group. This has lesser priority then empty lines in rules
+  // The default number of empty lines after any group. This has lesser priority than empty lines in rules
   "importSorter.sortConfiguration.customOrderingRules.defaultNumberOfEmptyLinesAfterGroup": 1,
 
-  // The default order level of everything which is not included into rules
+  // The default order level of everything that is not included in rules
   "importSorter.sortConfiguration.customOrderingRules.defaultOrderLevel": 20,
 
   // Disable sorting of path on the default group
   "importSorter.sortConfiguration.customOrderingRules.disableDefaultOrderSort": false,
 
-  // The default order level of everything which is not included into rules
+  // The default order level of everything that is not included in rules
   "importSorter.sortConfiguration.customOrderingRules.rules": [
         {
             "type": "importMember",
@@ -123,71 +155,65 @@ an example of default configuration is provided bellow. For available options ha
   "importSorter.sortConfiguration.importPaths.order": "caseInsensitive",
 
   // Combine imports with the same path
-  "importSorter.sortConfiguration.joinImportPaths": true
+  "importSorter.sortConfiguration.joinImportPaths": true,
 
-  // Removes not used imports where we do not have explicit side effects
-  "importSorter.sortConfiguration.removeUnusedImports": false
+  // Removes unused imports where we do not have explicit side effects
+  "importSorter.sortConfiguration.removeUnusedImports": false,
 
   // Works only if removeUnusedImports enabled. This option will remove default imports if they are not explicitly used in the source code.
   "importSorter.sortConfiguration.removeUnusedDefaultImports": false
 ```
 
-## Some settings in more details
+## Configuration Details
 
-- `importSorter.generalConfiguration.configurationFilePath` adds an option to read configuration from file. The setting represents a relative path to the root of the open vscode workspace.
-  The default value is `./import-sorter.json`. The path search is relative to the open workspace(`usually where package.json is located`). Bellow is a example of the configuration:
+The Import Sorter extension provides several configuration options to customize its behavior. These settings allow you to control the import sorting process according to your preferences. Below, we describe the available settings in detail:
+
+### Configuration File Path
+
+The `importSorter.generalConfiguration.configurationFilePath` setting enables reading the configuration from a file. This setting represents a relative path to the root of the open Visual Studio Code workspace. By default, the configuration file path is set to `./import-sorter.json`, which is relative to the workspace (usually where `package.json` is located). Here's an example of the configuration:
 
 ```json
-import-sorter.json
-
-{
-  "importStringConfiguration": {
-    "trailingComma": "multiLine",
-    "tabSize": 4,
-    "maximumNumberOfImportExpressionsPerLine": {
-      "count": 50
-    }
-  },
-  "sortConfiguration": {
-    "customOrderingRules": {
-      "defaultNumberOfEmptyLinesAfterGroup": 2
+  {
+    "importStringConfiguration": {
+      "trailingComma": "multiLine",
+      "tabSize": 4,
+      "maximumNumberOfImportExpressionsPerLine": {
+        "count": 50
+      }
+    },
+    "sortConfiguration": {
+      "customOrderingRules": {
+        "defaultNumberOfEmptyLinesAfterGroup": 2
+      }
     }
   }
-}
 ```
 
-Alternatively you can set configuration as in visual studio code
+Alternatively, you can set the configuration inline in Visual Studio Code's `settings.json` file using the following format:
 
 ```json
-import-sorter.json
-
 {
-    "importStringConfiguration.trailingComma": "multiLine",
-    "importStringConfiguration.tabSize": 4,
-    "importStringConfiguration.maximumNumberOfImportExpressionsPerLine.count": 50,
-    "sortConfiguration.customOrderingRules.defaultNumberOfEmptyLinesAfterGroup": 2
+  "importStringConfiguration.trailingComma": "multiLine",
+  "importStringConfiguration.tabSize": 4,
+  "importStringConfiguration.maximumNumberOfImportExpressionsPerLine.count": 50,
+  "sortConfiguration.customOrderingRules.defaultNumberOfEmptyLinesAfterGroup": 2
 }
 ```
 
-Or
+Or, you can use the fully qualified setting paths:
 
 ```json
-import-sorter.json
-
 {
-    "importSorter.importStringConfiguration.trailingComma": "multiLine",
-    "importSorter.importStringConfiguration.tabSize": 4,
-    "importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.count": 50,
-    "importSorter.sortConfiguration.customOrderingRules.defaultNumberOfEmptyLinesAfterGroup": 2
+  "importSorter.importStringConfiguration.trailingComma": "multiLine",
+  "importSorter.importStringConfiguration.tabSize": 4,
+  "importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.count": 50,
+  "importSorter.sortConfiguration.customOrderingRules.defaultNumberOfEmptyLinesAfterGroup": 2
 }
 ```
 
-The priority of settings is given to the configuration file. If the setting does not exist in the configuration file then the value of the vscode setting will be taken. If file does not exist, then all settings will be taken from vscode.
+### Exclusion Patterns
 
----
-
-- `importSorter.generalConfiguration.exclude` represents an array of regex expressions to match agaist full file paths. If matched, then the file will be excluded from sorting.
-  The default value is `[]`. Bellow is a example of the configuration:
+The `importSorter.generalConfiguration.exclude` setting represents an array of regex expressions to match against full file paths. If a file path matches any of the provided patterns, it will be excluded from the import sorting process. The default value is `[]`. Here's an example of the configuration:
 
 ```json
 {
@@ -197,12 +223,11 @@ The priority of settings is given to the configuration file. If the setting does
 }
 ```
 
-In the example, any path which finishes with `pollyfill.ts` path will be excluded.
+In the example, any path that ends with `polyfill.ts` will be excluded from sorting.
 
----
+### Custom Ordering Rules
 
-- `importSorter.sortConfiguration.customOrderingRules.rules` is a json array of regex expressions which sets the sort group order.
-  As of now the default setting is
+The `importSorter.sortConfiguration.customOrderingRules.rules` setting is a JSON array of regex expressions that define the order of import groups. The default setting is as follows:
 
 ```json
 [
@@ -223,36 +248,24 @@ In the example, any path which finishes with `pollyfill.ts` path will be exclude
 ]
 ```
 
-The `type` is an optional and defaults to `path`(another value is `importMember`). That setting says that we make any import which does not have `from` keyword `(possibly an import with side effect)` to have the highest order priority of `10`. The highest priority given to the lowest number. We also say that we do not want to apply sorting rules to that group of `disableSort: false`. Then anything which does have `.` in the import path gets next priority of `40`. Everything else which is not included by those rules get a default priority of 20 denoted by `importSorter.sortConfiguration.customOrderingRules.defaultOrderLevel`.
+The `type` field is optional and defaults to `path` (another valid value is `importMember`). This setting ensures that imports without the `from` keyword (possibly imports with side effects) have the highest order priority of 10. The priority is determined by the `orderLevel` property, with lower values indicating higher priority. The `disableSort` property allows preserving the order of imports within the group when set to true. Imports that match the provided regex patterns are sorted into separate groups based on their order level.
 
-As a result we get `4` sort `groups`. Those groups are `individually` sorted by the rules applied in the settings unless `disableSort: true` which would preserve the order of imports.
+### Import String Configuration
 
----
+The `importSorter.importStringConfiguration.trailingComma` setting is an enum that can be set to `always`, `multiLine`, or `none`. These options control whether a trailing comma is appended to import statements. The default value is `none`.
 
-- `importSorter.importStringConfiguration.trailingComma` is an enum which can be `always`, `multiLine`, or `none`.
-  - `always` - will always append trailing comma.
-  - `multiLine` - will append comma if import line is broken to multiple lines.
-  - `none` - will not append comma(`This one is a default setting`)
+The `importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.type` setting is an enum that can be set to `words`, `maxLineLength`, or `newLineEachExpressionAfterCountLimit`. It works in conjunction with the `importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.count` setting, which determines the threshold for moving imports to the next line. The available options are:
 
----
+* `words`: `count` denotes the maximum number of import expressions per line.
+* `maxLineLength`: `count` denotes the maximum number of characters per line.
+* `newLineEachExpressionAfterCountLimit`: `count` denotes the maximum number of characters allowed on the first line. If all imports exceed this limit, each import will be placed on a new line.
+* `newLineEachExpressionAfterCountLimitExceptIfOnlyOne`: `count` behaves the same as the previous option, except when there is only one import expression. In that case, it will remain on the same line even if the length exceeds the `count` value. This option aligns with the behavior of Prettier and addresses [GitHub Prettier Issue #1954](https://github.com/prettier/prettier/issues/1954).
 
-- `importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.type` is an enum which can be `words`, `maxLineLength`, or `newLineEachExpressionAfterCountLimit`. The setting is set in pair with `importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.count`, which determines the number after which the imports are going to be moved to the next line
-  - `words` - `count` denotes maximum number of import expressions per line.
-  - `maxLineLength` - `count` denotes maximum number of characters per line.
-  - `newLineEachExpressionAfterCountLimit` - `count` denotes maximum number of characters which can be on the first line. If all imports do not fit one line, then each import will be placed on a new line.
-  - `newLineEachExpressionAfterCountLimitExceptIfOnlyOne` - `count`. Same as the previous option, except if we only have one import expression then we do not move it to the next line even if the length is longer than the `count`. This option is also used to be able to integrate with behavior of `prettier` and addresses [GitHub Prettier Issues #1954](https://github.com/prettier/prettier/issues/1954)
+The `importSorter.importStringConfiguration.tabType` setting is an enum that can be set to `tab` or `space`. These options determine the character used for indentation when imports are placed on a new line. The number of spaces or tabs is determined by the `importSorter.importStringConfiguration.tabSize` setting.
 
----
+### Example: Default Setup for Prettier Integration
 
-- `importSorter.importStringConfiguration.tabType` is an enum which can be `tab` or `space`.
-  - `space` - will add `importSorter.importStringConfiguration.tabSize` number of space characters for each new-lined import.
-  - `tab` - will add a tab character for each new-lined import. The tab character would assume to take `importSorter.importStringConfiguration.tabSize` number of space characters
-
----
-
-## Example of default setup for Prettier
-
-At the time of writing this documentation, the following are the settings which needs to be set to make import sorter have the behavior aligned with the defaults of Prettier.
+To align the Import Sorter behavior with the defaults of Prettier, you can configure the following settings:
 
 ```json
 {
@@ -265,11 +278,9 @@ At the time of writing this documentation, the following are the settings which 
 }
 ```
 
-Alternatively you can set `import-sorter.json` configuration file with the following content.
+Alternatively, you can set up a `import-sorter.json` configuration file with the following content:
 
 ```json
-import-sorter.json
-
 {
     "generalConfiguration.sortOnBeforeSave": true,
     "importStringConfiguration.maximumNumberOfImportExpressionsPerLine.type": "newLineEachExpressionAfterCountLimitExceptIfOnlyOne",
