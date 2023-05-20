@@ -132,7 +132,7 @@ export class InMemoryImportSorter implements ImportSorter {
     const duplicates: ImportElement[] = [];
 
     const joined = normalizedPathsExpr
-      .groupBy((x) => x.moduleSpecifierName)
+      .groupBy((x) => `${x.isTypeOnly}#${x.moduleSpecifierName}}`)
       .map((x: ImportElement[]) => {
         if (x.length > 1) {
           const nameBindings = chain(x)
