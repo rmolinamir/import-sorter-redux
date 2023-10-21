@@ -1,6 +1,5 @@
 import fs from 'fs';
 import ts from 'typescript';
-
 import { textProcessing } from './helpers/helpers-public';
 import {
   Comment,
@@ -8,6 +7,7 @@ import {
   ImportNode,
   ParsedImportValues
 } from './models/models-public';
+import { QuoteMark } from './models/quote-mark';
 
 export interface AstParser {
   parseImports(fullFilePath: string, _sourceText?: string): ParsedImportValues;
@@ -209,6 +209,8 @@ export class SimpleImportAstParser implements AstParser {
 
     result.isTypeOnly = importClause.isTypeOnly;
 
+    result.quoteMark = this.getQuoteMark(importNode, sourceFile);
+
     if (importClause.name) {
       result.hasFromKeyWord = true;
       result.defaultImportName = importClause.name.text;
@@ -238,8 +240,24 @@ export class SimpleImportAstParser implements AstParser {
       return result;
     }
 
-    console.warn('unsupported import: ', JSON.stringify(importClause));
+    console.warn('Unsupported import: ', JSON.stringify(importClause));
 
     return null;
+  }
+
+  private getQuoteMark(
+    importNode: ImportNode,
+    sourceFile: ts.SourceFile
+  ): QuoteMark {
+    const importDeclaration = importNode.importDeclaration;
+    const moduleSpecifier =
+      importDeclaration.moduleSpecifier as ts.StringLiteral;
+    const quoteMark = moduleSpecifier
+      .getFullText(sourceFile)
+      .trim()
+      .startsWith("'")
+      ? 'single'
+      : 'double';
+    return quoteMark;
   }
 }

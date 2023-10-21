@@ -11,7 +11,7 @@ export const defaultImportStringConfiguration: ImportStringConfiguration = {
   tabType: 'space',
   numberOfEmptyLinesAfterAllImports: 1,
   trailingComma: 'none',
-  quoteMark: 'single',
+  quoteMark: 'auto',
   maximumNumberOfImportExpressionsPerLine: {
     count: 100,
     type: 'maxLineLength'

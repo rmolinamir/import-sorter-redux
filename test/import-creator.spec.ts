@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-
 import {
   defaultImportStringConfiguration,
   ImportElementGroup,
@@ -34,7 +33,7 @@ suite('ImportCreator', () => {
             {
               moduleSpecifierName: 'createString.ts',
               startPosition: { line: 0, character: 0 },
-              endPosition: { line: 0, character: 53 },
+              endPosition: { line: 0, character: 0 },
               hasFromKeyWord: true,
               isTypeOnly: false,
               defaultImportName: 't',
@@ -46,7 +45,8 @@ suite('ImportCreator', () => {
               importComment: {
                 leadingComments: [],
                 trailingComments: []
-              }
+              },
+              quoteMark: 'single'
             }
           ],
           numberOfEmptyLinesAfterGroup: 3,
@@ -70,7 +70,7 @@ suite('ImportCreator', () => {
             {
               moduleSpecifierName: '@angular/core',
               startPosition: { line: 0, character: 0 },
-              endPosition: { line: 0, character: 70 },
+              endPosition: { line: 0, character: 0 },
               hasFromKeyWord: true,
               isTypeOnly: false,
               namedBindings: [
@@ -80,7 +80,8 @@ suite('ImportCreator', () => {
               importComment: {
                 leadingComments: [],
                 trailingComments: []
-              }
+              },
+              quoteMark: 'single'
             }
           ],
           numberOfEmptyLinesAfterGroup: 0,
@@ -105,7 +106,7 @@ suite('ImportCreator', () => {
             {
               moduleSpecifierName: '@angular/core',
               startPosition: { line: 0, character: 0 },
-              endPosition: { line: 0, character: 70 },
+              endPosition: { line: 0, character: 0 },
               hasFromKeyWord: true,
               isTypeOnly: false,
               namedBindings: [
@@ -115,7 +116,8 @@ suite('ImportCreator', () => {
               importComment: {
                 leadingComments: [],
                 trailingComments: []
-              }
+              },
+              quoteMark: 'single'
             }
           ],
           numberOfEmptyLinesAfterGroup: 0,
@@ -140,7 +142,7 @@ suite('ImportCreator', () => {
             {
               moduleSpecifierName: '@angular/core',
               startPosition: { line: 0, character: 0 },
-              endPosition: { line: 0, character: 70 },
+              endPosition: { line: 0, character: 0 },
               hasFromKeyWord: true,
               isTypeOnly: false,
               namedBindings: [
@@ -150,7 +152,8 @@ suite('ImportCreator', () => {
               importComment: {
                 leadingComments: [],
                 trailingComments: []
-              }
+              },
+              quoteMark: 'single'
             }
           ],
           numberOfEmptyLinesAfterGroup: 0,
@@ -175,7 +178,7 @@ suite('ImportCreator', () => {
             {
               moduleSpecifierName: '@angular/core',
               startPosition: { line: 0, character: 0 },
-              endPosition: { line: 0, character: 70 },
+              endPosition: { line: 0, character: 0 },
               hasFromKeyWord: true,
               isTypeOnly: false,
               namedBindings: [
@@ -185,7 +188,8 @@ suite('ImportCreator', () => {
               importComment: {
                 leadingComments: [],
                 trailingComments: []
-              }
+              },
+              quoteMark: 'single'
             }
           ],
           numberOfEmptyLinesAfterGroup: 0,
@@ -210,7 +214,7 @@ suite('ImportCreator', () => {
             {
               moduleSpecifierName: '@angular/core',
               startPosition: { line: 0, character: 0 },
-              endPosition: { line: 0, character: 70 },
+              endPosition: { line: 0, character: 0 },
               hasFromKeyWord: true,
               isTypeOnly: false,
               namedBindings: [
@@ -220,7 +224,8 @@ suite('ImportCreator', () => {
               importComment: {
                 leadingComments: [],
                 trailingComments: []
-              }
+              },
+              quoteMark: 'single'
             }
           ],
           numberOfEmptyLinesAfterGroup: 0,
@@ -245,7 +250,7 @@ suite('ImportCreator', () => {
             {
               moduleSpecifierName: '@angular/core',
               startPosition: { line: 0, character: 0 },
-              endPosition: { line: 0, character: 70 },
+              endPosition: { line: 0, character: 0 },
               hasFromKeyWord: true,
               isTypeOnly: false,
               namedBindings: [
@@ -255,7 +260,8 @@ suite('ImportCreator', () => {
               importComment: {
                 leadingComments: [],
                 trailingComments: []
-              }
+              },
+              quoteMark: 'single'
             }
           ],
           numberOfEmptyLinesAfterGroup: 0,
@@ -280,7 +286,7 @@ suite('ImportCreator', () => {
             {
               moduleSpecifierName: '@angular/core',
               startPosition: { line: 0, character: 0 },
-              endPosition: { line: 0, character: 70 },
+              endPosition: { line: 0, character: 0 },
               hasFromKeyWord: true,
               isTypeOnly: false,
               namedBindings: [
@@ -290,7 +296,8 @@ suite('ImportCreator', () => {
               importComment: {
                 leadingComments: [],
                 trailingComments: []
-              }
+              },
+              quoteMark: 'single'
             }
           ],
           numberOfEmptyLinesAfterGroup: 0,
@@ -315,7 +322,7 @@ suite('ImportCreator', () => {
             {
               moduleSpecifierName: '@angular/core',
               startPosition: { line: 0, character: 0 },
-              endPosition: { line: 0, character: 69 },
+              endPosition: { line: 0, character: 0 },
               hasFromKeyWord: true,
               isTypeOnly: false,
               namedBindings: [
@@ -325,7 +332,8 @@ suite('ImportCreator', () => {
               importComment: {
                 leadingComments: [],
                 trailingComments: []
-              }
+              },
+              quoteMark: 'single'
             }
           ],
           numberOfEmptyLinesAfterGroup: 0,
@@ -350,7 +358,7 @@ suite('ImportCreator', () => {
             {
               moduleSpecifierName: '@angular/core',
               startPosition: { line: 0, character: 0 },
-              endPosition: { line: 0, character: 40 },
+              endPosition: { line: 0, character: 0 },
               hasFromKeyWord: true,
               isTypeOnly: false,
               namedBindings: [
@@ -361,7 +369,8 @@ suite('ImportCreator', () => {
               importComment: {
                 leadingComments: [],
                 trailingComments: []
-              }
+              },
+              quoteMark: 'single'
             }
           ],
           numberOfEmptyLinesAfterGroup: 0,
@@ -379,7 +388,7 @@ suite('ImportCreator', () => {
             {
               moduleSpecifierName: 'foo',
               startPosition: { line: 0, character: 0 },
-              endPosition: { line: 0, character: 40 },
+              endPosition: { line: 0, character: 0 },
               hasFromKeyWord: true,
               isTypeOnly: true,
               namedBindings: [
@@ -389,7 +398,8 @@ suite('ImportCreator', () => {
               importComment: {
                 leadingComments: [],
                 trailingComments: []
-              }
+              },
+              quoteMark: 'single'
             }
           ],
           numberOfEmptyLinesAfterGroup: 0,
@@ -397,6 +407,142 @@ suite('ImportCreator', () => {
         }
       ],
       expected: "import type { a, b } from 'foo';\n"
+    },
+    {
+      name: 'Test 12 - Double Quotation Mark',
+      config: createConfiguration({
+        numberOfEmptyLinesAfterAllImports: 0,
+        maximumNumberOfImportExpressionsPerLine: {
+          count: 10,
+          type: 'maxLineLength'
+        },
+        quoteMark: 'double'
+      } as ImportStringConfiguration),
+      elementGroups: [
+        {
+          elements: [
+            {
+              moduleSpecifierName: 'react',
+              startPosition: { line: 0, character: 0 },
+              endPosition: { line: 0, character: 0 },
+              hasFromKeyWord: true,
+              isTypeOnly: false,
+              defaultImportName: 'React',
+              namedBindings: [],
+              importComment: {
+                leadingComments: [],
+                trailingComments: []
+              },
+              quoteMark: 'double'
+            }
+          ],
+          numberOfEmptyLinesAfterGroup: 0,
+          customOrderRule: null
+        }
+      ],
+      expected: 'import React from "react";'
+    },
+    {
+      name: 'Test 13 - Single Quotation Mark',
+      config: createConfiguration({
+        numberOfEmptyLinesAfterAllImports: 0,
+        maximumNumberOfImportExpressionsPerLine: {
+          count: 10,
+          type: 'maxLineLength'
+        },
+        quoteMark: 'single'
+      } as ImportStringConfiguration),
+      elementGroups: [
+        {
+          elements: [
+            {
+              moduleSpecifierName: 'react',
+              startPosition: { line: 0, character: 0 },
+              endPosition: { line: 0, character: 0 },
+              hasFromKeyWord: true,
+              isTypeOnly: false,
+              defaultImportName: 'React',
+              namedBindings: [],
+              importComment: {
+                leadingComments: [],
+                trailingComments: []
+              },
+              quoteMark: 'single'
+            }
+          ],
+          numberOfEmptyLinesAfterGroup: 0,
+          customOrderRule: null
+        }
+      ],
+      expected: "import React from 'react';"
+    },
+    {
+      name: 'Test 14 - Auto Quotation Mark from the import declaration (single)',
+      config: createConfiguration({
+        numberOfEmptyLinesAfterAllImports: 0,
+        maximumNumberOfImportExpressionsPerLine: {
+          count: 10,
+          type: 'maxLineLength'
+        },
+        quoteMark: 'auto'
+      } as ImportStringConfiguration),
+      elementGroups: [
+        {
+          elements: [
+            {
+              moduleSpecifierName: 'react',
+              startPosition: { line: 0, character: 0 },
+              endPosition: { line: 0, character: 0 },
+              hasFromKeyWord: true,
+              isTypeOnly: false,
+              defaultImportName: 'React',
+              namedBindings: [],
+              importComment: {
+                leadingComments: [],
+                trailingComments: []
+              },
+              quoteMark: 'single'
+            }
+          ],
+          numberOfEmptyLinesAfterGroup: 0,
+          customOrderRule: null
+        }
+      ],
+      expected: "import React from 'react';"
+    },
+    {
+      name: 'Test 15 - Auto Quotation Mark from the import declaration (double)',
+      config: createConfiguration({
+        numberOfEmptyLinesAfterAllImports: 0,
+        maximumNumberOfImportExpressionsPerLine: {
+          count: 10,
+          type: 'maxLineLength'
+        },
+        quoteMark: 'auto'
+      } as ImportStringConfiguration),
+      elementGroups: [
+        {
+          elements: [
+            {
+              moduleSpecifierName: 'react',
+              startPosition: { line: 0, character: 0 },
+              endPosition: { line: 0, character: 0 },
+              hasFromKeyWord: true,
+              isTypeOnly: false,
+              defaultImportName: 'React',
+              namedBindings: [],
+              importComment: {
+                leadingComments: [],
+                trailingComments: []
+              },
+              quoteMark: 'double'
+            }
+          ],
+          numberOfEmptyLinesAfterGroup: 0,
+          customOrderRule: null
+        }
+      ],
+      expected: 'import React from "react";'
     }
   ];
 

@@ -293,7 +293,7 @@ To run tests for your VS Code extension using the `vscode-test` framework, follo
 4. The test results will be displayed in the debug console.
 5. To modify existing tests or add new ones, navigate to the `test/extension.test.ts` file or create new test files within the `test` folder.
    * Test files should follow the naming pattern `**.test.ts` to be recognized by the test runner.
-   * You can organize your tests into subfolders within the `test` folder according to your preferred structure.
+   * You can organize your tests into sub-folders within the `test` folder according to your preferred structure.
 
 By following these steps, you can leverage the `vscode-test` framework to execute and monitor tests for your VS Code extension, making it easier to develop and maintain a robust extension with reliable test coverage.
 

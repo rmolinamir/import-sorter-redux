@@ -1,5 +1,4 @@
 import { chain, LoDashExplicitArrayWrapper } from 'lodash';
-
 import {
   ImportElement,
   ImportElementGroup,
@@ -104,7 +103,7 @@ export class InMemoryImportCreator implements ImportCreator {
 
   private createSingleImportString(element: ImportElement) {
     const importKeyword = this.getImportKeyword(element);
-    const qMark = this.getQuoteMark();
+    const qMark = this.getQuoteMarkChar(element);
 
     if (!element.hasFromKeyWord)
       return `${importKeyword} ${qMark}${element.moduleSpecifierName}${qMark}${this.semicolonChar}`;
@@ -131,7 +130,7 @@ export class InMemoryImportCreator implements ImportCreator {
 
   private createStarImport(element: ImportElement) {
     const importKeyword = this.getImportKeyword(element);
-    const qMark = this.getQuoteMark();
+    const qMark = this.getQuoteMarkChar(element);
     const spaceConfig = this.getSpaceConfig();
 
     if (element.defaultImportName)
@@ -340,7 +339,7 @@ export class InMemoryImportCreator implements ImportCreator {
     isSingleLine: boolean
   ) {
     const importKeyword = this.getImportKeyword(element);
-    const qMark = this.getQuoteMark();
+    const qMark = this.getQuoteMarkChar(element);
     const spaceConfig = this.getSpaceConfig();
 
     if (element.defaultImportName)
@@ -386,8 +385,10 @@ export class InMemoryImportCreator implements ImportCreator {
     else return `import`;
   }
 
-  private getQuoteMark() {
-    return this.importStringConfig.quoteMark === 'single' ? "'" : '"';
+  private getQuoteMarkChar(element: ImportElement) {
+    if (this.importStringConfig.quoteMark === 'auto' && element.quoteMark)
+      return element.quoteMark === 'single' ? "'" : '"';
+    else return this.importStringConfig.quoteMark === 'single' ? "'" : '"';
   }
 
   private get semicolonChar() {

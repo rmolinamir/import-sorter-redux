@@ -278,10 +278,11 @@
         },
         "importSorter.importStringConfiguration.quoteMark": {
           "enum": [
+            "auto",
             "single",
             "double"
           ],
-          "default": "single",
+          "default": "auto",
           "description": "Specifies the type of quotes used for import paths."
         },
         "importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.type": {

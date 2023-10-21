@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-
 import { SimpleImportAstParser } from '../src/core/ast-parser';
 import { ImportElement } from '../src/core/core-public';
 
@@ -28,7 +27,8 @@ suite('AstParser', () => {
         importComment: {
           leadingComments: [],
           trailingComments: []
-        }
+        },
+        quoteMark: 'single'
       }
     },
     {
@@ -65,7 +65,8 @@ suite('AstParser', () => {
             }
           ],
           trailingComments: []
-        }
+        },
+        quoteMark: 'single'
       }
     },
     {
@@ -85,7 +86,8 @@ suite('AstParser', () => {
         importComment: {
           leadingComments: [],
           trailingComments: []
-        }
+        },
+        quoteMark: 'double'
       }
     },
     {
@@ -134,7 +136,8 @@ suite('AstParser', () => {
               isTripleSlashDirective: false
             }
           ]
-        }
+        },
+        quoteMark: 'single'
       }
     },
     {
@@ -153,7 +156,8 @@ suite('AstParser', () => {
         importComment: {
           leadingComments: [],
           trailingComments: []
-        }
+        },
+        quoteMark: 'double'
       }
     }
   ];

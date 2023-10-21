@@ -1,3 +1,5 @@
+import { QuoteMark } from './quote-mark';
+
 export interface ImportStringConfiguration {
   maximumNumberOfImportExpressionsPerLine: {
     count: number;
@@ -7,7 +9,7 @@ export interface ImportStringConfiguration {
       | 'newLineEachExpressionAfterCountLimit'
       | 'newLineEachExpressionAfterCountLimitExceptIfOnlyOne';
   };
-  quoteMark: 'single' | 'double';
+  quoteMark: QuoteMark | 'auto';
   tabSize: number;
   tabType: 'tab' | 'space';
   numberOfEmptyLinesAfterAllImports: number;

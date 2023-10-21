@@ -1,4 +1,5 @@
 import { Comment } from './comment';
+import { QuoteMark } from './quote-mark';
 
 export interface ImportElement {
   moduleSpecifierName: string;
@@ -15,4 +16,5 @@ export interface ImportElement {
     aliasName?: string | null;
     name: string;
   }[];
+  quoteMark?: QuoteMark;
 }
