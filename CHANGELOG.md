@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.1.5](https://github.com/rmolinamir/import-sorter-redux/compare/import-sorter-redux-v0.1.4...${npm.name}-v0.1.5) (2023-10-25)
+
+
+### Bug Fixes
+
+* **ast-parser:** fix default import auto quote mark detection ([4002bd3](https://github.com/rmolinamir/import-sorter-redux/commit/4002bd3cf4574ed96ddd268e3c82a690c9276f18))
+
 ### [0.1.4](https://github.com/rmolinamir/import-sorter-redux/compare/import-sorter-redux-v0.1.3...${npm.name}-v0.1.4) (2023-10-22)
 
 
