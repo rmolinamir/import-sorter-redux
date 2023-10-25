@@ -226,7 +226,7 @@
         },
         "importSorter.sortConfiguration.customOrderingRules.defaultNumberOfEmptyLinesAfterGroup": {
           "type": "number",
-          "default": 1,
+          "default": 0,
           "description": "Specifies the default number of empty lines after any import group. This has lower priority than empty lines defined in rules."
         },
         "importSorter.sortConfiguration.customOrderingRules.disableDefaultOrderSort": {
@@ -239,21 +239,24 @@
           "default": [
             {
               "type": "importMember",
-              "regex": "~$",
+              "regex": "^$",
               "orderLevel": 5,
               "disableSort": true
             },
             {
-              "regex": "~[~.@]",
-              "orderLevel": 10
+              "regex": "^[^.@]",
+              "orderLevel": 10,
+              "disableSort": false
             },
             {
-              "regex": "~[@]",
-              "orderLevel": 15
+              "regex": "^[@]",
+              "orderLevel": 15,
+              "disableSort": false
             },
             {
-              "regex": "~[.]",
-              "orderLevel": 30
+              "regex": "^[.]",
+              "orderLevel": 30,
+              "disableSort": false
             }
           ],
           "description": "Specifies custom ordering rules for import groups."
@@ -297,7 +300,7 @@
         },
         "importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.count": {
           "type": "number",
-          "default": 100,
+          "default": 80,
           "description": "Specifies the maximum number of import expressions allowed on a single line."
         },
         "importSorter.importStringConfiguration.spacingPerImportExpression.afterStartingBracket": {

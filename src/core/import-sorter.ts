@@ -1,6 +1,5 @@
 import { chain, cloneDeep, isNil, LoDashExplicitArrayWrapper } from 'lodash';
 import path from 'path';
-
 import { CustomOrderRule } from './models/custom-order-rule';
 import { ImportElementSortResult } from './models/import-element-sort-result';
 import {

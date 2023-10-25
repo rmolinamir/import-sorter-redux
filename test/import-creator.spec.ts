@@ -13,8 +13,9 @@ interface ImportCreatorTest {
   expected: string;
 }
 
-const createConfiguration = (partialConfig: ImportStringConfiguration) =>
-  Object.assign({}, defaultImportStringConfiguration, partialConfig);
+const createConfiguration = (
+  partialConfig: Partial<ImportStringConfiguration>
+) => Object.assign({}, defaultImportStringConfiguration, partialConfig);
 
 suite('ImportCreator', () => {
   const tests: ImportCreatorTest[] = [
@@ -26,7 +27,7 @@ suite('ImportCreator', () => {
           count: 23,
           type: 'maxLineLength'
         }
-      } as ImportStringConfiguration),
+      }),
       elementGroups: [
         {
           elements: [
@@ -63,7 +64,7 @@ suite('ImportCreator', () => {
           count: 70,
           type: 'maxLineLength'
         }
-      } as ImportStringConfiguration),
+      }),
       elementGroups: [
         {
           elements: [
@@ -99,7 +100,7 @@ suite('ImportCreator', () => {
           count: 69,
           type: 'maxLineLength'
         }
-      } as ImportStringConfiguration),
+      }),
       elementGroups: [
         {
           elements: [
@@ -135,7 +136,7 @@ suite('ImportCreator', () => {
           count: 71,
           type: 'maxLineLength'
         }
-      } as ImportStringConfiguration),
+      }),
       elementGroups: [
         {
           elements: [
@@ -171,7 +172,7 @@ suite('ImportCreator', () => {
           count: 70,
           type: 'maxLineLength'
         }
-      } as ImportStringConfiguration),
+      }),
       elementGroups: [
         {
           elements: [
@@ -207,7 +208,7 @@ suite('ImportCreator', () => {
           count: 70,
           type: 'maxLineLength'
         }
-      } as ImportStringConfiguration),
+      }),
       elementGroups: [
         {
           elements: [
@@ -243,7 +244,7 @@ suite('ImportCreator', () => {
           count: 69,
           type: 'maxLineLength'
         }
-      } as ImportStringConfiguration),
+      }),
       elementGroups: [
         {
           elements: [
@@ -279,7 +280,7 @@ suite('ImportCreator', () => {
           count: 69,
           type: 'maxLineLength'
         }
-      } as ImportStringConfiguration),
+      }),
       elementGroups: [
         {
           elements: [
@@ -315,7 +316,7 @@ suite('ImportCreator', () => {
           count: 68,
           type: 'maxLineLength'
         }
-      } as ImportStringConfiguration),
+      }),
       elementGroups: [
         {
           elements: [
@@ -351,7 +352,7 @@ suite('ImportCreator', () => {
           count: 10,
           type: 'maxLineLength'
         }
-      } as ImportStringConfiguration),
+      }),
       elementGroups: [
         {
           elements: [
@@ -381,7 +382,7 @@ suite('ImportCreator', () => {
     },
     {
       name: 'Test 11 - Type-Only Import Declaration',
-      config: createConfiguration({} as ImportStringConfiguration),
+      config: createConfiguration({}),
       elementGroups: [
         {
           elements: [
@@ -417,7 +418,7 @@ suite('ImportCreator', () => {
           type: 'maxLineLength'
         },
         quoteMark: 'double'
-      } as ImportStringConfiguration),
+      }),
       elementGroups: [
         {
           elements: [
@@ -451,7 +452,7 @@ suite('ImportCreator', () => {
           type: 'maxLineLength'
         },
         quoteMark: 'single'
-      } as ImportStringConfiguration),
+      }),
       elementGroups: [
         {
           elements: [
@@ -485,7 +486,7 @@ suite('ImportCreator', () => {
           type: 'maxLineLength'
         },
         quoteMark: 'auto'
-      } as ImportStringConfiguration),
+      }),
       elementGroups: [
         {
           elements: [
@@ -519,7 +520,7 @@ suite('ImportCreator', () => {
           type: 'maxLineLength'
         },
         quoteMark: 'auto'
-      } as ImportStringConfiguration),
+      }),
       elementGroups: [
         {
           elements: [

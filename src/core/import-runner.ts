@@ -2,7 +2,6 @@ import { chain, cloneDeep, range as rangeLodash } from 'lodash';
 import { sep } from 'path';
 import { merge as mergeObservable, Observable, of } from 'rxjs';
 import { mergeAll, mergeMap, switchMap } from 'rxjs/operators';
-
 import { allowedLanguages } from './allowed-languages';
 import { AstParser } from './ast-parser';
 import { io, textProcessing } from './helpers/helpers-public';

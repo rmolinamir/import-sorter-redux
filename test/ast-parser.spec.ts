@@ -160,7 +160,6 @@ suite('AstParser', () => {
         quoteMark: 'double'
       }
     },
-    // import "./globals.css";
     {
       name: 'Test 6',
       importDeclaration: `import './globals.css';`,

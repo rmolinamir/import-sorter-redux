@@ -15,7 +15,6 @@ import {
   window,
   workspace
 } from 'vscode';
-
 import { allowedLanguages } from './core/allowed-languages';
 import {
   defaultGeneralConfiguration,

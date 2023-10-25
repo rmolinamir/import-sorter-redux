@@ -25,7 +25,12 @@ module.exports = {
         functions: 'never'
       }
     ],
-    'no-console': ['warn', { allow: ['warn', 'error', 'debug', 'info'] }],
+    'no-console': [
+      'warn',
+      {
+        allow: ['warn', 'error', 'debug', 'info']
+      }
+    ],
     'padded-blocks': ['error', 'never'],
     'prefer-arrow-callback': 'off',
     semi: 'off'
