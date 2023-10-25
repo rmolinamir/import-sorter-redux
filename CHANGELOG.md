@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.1.6](https://github.com/rmolinamir/import-sorter-redux/compare/import-sorter-redux-v0.1.5...${npm.name}-v0.1.6) (2023-10-25)
+
+
+### Bug Fixes
+
+* **default sort configurations fix:** added import sorter tests | default sort configurations update ([9c423a0](https://github.com/rmolinamir/import-sorter-redux/commit/9c423a0158c655e36d1ac883f568c11d3a69573e))
+
 ### [0.1.5](https://github.com/rmolinamir/import-sorter-redux/compare/import-sorter-redux-v0.1.4...${npm.name}-v0.1.5) (2023-10-25)
 
 
