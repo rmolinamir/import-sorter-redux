@@ -159,6 +159,24 @@ suite('AstParser', () => {
         },
         quoteMark: 'double'
       }
+    },
+    // import "./globals.css";
+    {
+      name: 'Test 6',
+      importDeclaration: `import './globals.css';`,
+      expected: {
+        endPosition: { line: 0, character: 23 },
+        moduleSpecifierName: './globals.css',
+        hasFromKeyWord: false,
+        isTypeOnly: false,
+        namedBindings: [],
+        startPosition: { line: 0, character: 0 },
+        importComment: {
+          leadingComments: [],
+          trailingComments: []
+        },
+        quoteMark: 'single'
+      }
     }
   ];
 

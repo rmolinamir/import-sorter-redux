@@ -202,14 +202,13 @@ export class SimpleImportAstParser implements AstParser {
       hasFromKeyWord: false,
       isTypeOnly: false,
       namedBindings: [],
-      importComment: importNode.importComment
+      importComment: importNode.importComment,
+      quoteMark: this.getQuoteMark(importNode, sourceFile)
     };
 
     if (!importClause) return result;
 
     result.isTypeOnly = importClause.isTypeOnly;
-
-    result.quoteMark = this.getQuoteMark(importNode, sourceFile);
 
     if (importClause.name) {
       result.hasFromKeyWord = true;
