@@ -108,18 +108,30 @@ An example of the default configuration is provided below. For available options
   // The default order level of everything that is not included in rules
   "importSorter.sortConfiguration.customOrderingRules.rules": [
         {
-            "type": "importMember",
-            "regex": "^$",
-            "orderLevel": 10,
-            "disableSort": true
+          "type": "importMember",
+          "regex": "^$",
+          "orderLevel": 5,
+          "disableSort": true
         },
         {
-            "regex": "^[@]",
-            "orderLevel": 30
+          "regex": "^[^.@]",
+          "orderLevel": 10,
+          "disableSort": false
         },
         {
-            "regex": "^[.]",
-            "orderLevel": 40
+          "regex": "^@(?!/)",
+          "orderLevel": 15,
+          "disableSort": false
+        },
+        {
+          "regex": "^@(/)",
+          "orderLevel": 20,
+          "disableSort": false
+        },
+        {
+          "regex": "^[.]",
+          "orderLevel": 25,
+          "disableSort": false
         }
   ],
 
@@ -215,16 +227,28 @@ The `importSorter.sortConfiguration.customOrderingRules.rules` setting is a JSON
   {
     "type": "importMember",
     "regex": "^$",
-    "orderLevel": 10,
+    "orderLevel": 5,
     "disableSort": true
   },
   {
-    "regex": "^[@]",
-    "orderLevel": 30
+    "regex": "^[^.@]",
+    "orderLevel": 10,
+    "disableSort": false
+  },
+  {
+    "regex": "^@(?!/)",
+    "orderLevel": 15,
+    "disableSort": false
+  },
+  {
+    "regex": "^@(/)",
+    "orderLevel": 20,
+    "disableSort": false
   },
   {
     "regex": "^[.]",
-    "orderLevel": 40
+    "orderLevel": 25,
+    "disableSort": false
   }
 ]
 ```
