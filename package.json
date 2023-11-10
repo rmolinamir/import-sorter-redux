@@ -249,13 +249,18 @@
               "disableSort": false
             },
             {
-              "regex": "^[@]",
+              "regex": "^@(?!\/)",
               "orderLevel": 15,
               "disableSort": false
             },
             {
+              "regex": "^@(\/)",
+              "orderLevel": 20,
+              "disableSort": false
+            },
+            {
               "regex": "^[.]",
-              "orderLevel": 30,
+              "orderLevel": 25,
               "disableSort": false
             }
           ],
