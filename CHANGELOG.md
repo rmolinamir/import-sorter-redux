@@ -1,5 +1,7 @@
 # Changelog
 
+### [0.1.7](https://github.com/rmolinamir/import-sorter-redux/compare/import-sorter-redux-v0.1.6...${npm.name}-v0.1.7) (2023-11-10)
+
 ### [0.1.6](https://github.com/rmolinamir/import-sorter-redux/compare/import-sorter-redux-v0.1.5...${npm.name}-v0.1.6) (2023-10-25)
 
 
